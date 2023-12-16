@@ -1,10 +1,11 @@
 import React, { useState, createContext } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import JobSubmissionPage from './pages/JobSubmissionPage';
 import JobBoardPage from './pages/JobBoardPage';
+import Navigation from './components/nav';
 
 
 
@@ -18,11 +19,12 @@ function App() {
     <UserContext.Provider value={{ user, setUser }}>
       <Router>
         <Header />
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/submit-job" component={JobSubmissionPage} />
-          <Route path="/job-board" component={JobBoardPage} />
-        </Switch>
+        <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/submit-job" element={<JobSubmissionPage />} />
+        <Route path="/job-board" element={<JobBoardPage />} />
+      </Routes>
+        <Navigation />
         <Footer />
       </Router>
     </UserContext.Provider>
