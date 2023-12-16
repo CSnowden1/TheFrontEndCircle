@@ -32,12 +32,13 @@ function App() {
         <Navigation />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/submit-job" element={
+          <Route path="/job-board" element={
             <ProtectedRoute>
-              <JobSubmissionPage />
+              <JobBoardPage />
             </ProtectedRoute>
           } />
-          <Route path="/job-board" element={<JobBoardPage />} />
+          <Route path="/submit-job" element={<JobSubmissionPage />} />
+          <Route path='/login' element={<LoginForm />} />
           {/* Consider adding a route for the LoginForm */}
         </Routes>
         <Footer />
