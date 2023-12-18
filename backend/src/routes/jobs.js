@@ -1,58 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const { Job } = require('../models/jobModel');
-const { User } = require('../models/userModel');
-const authMiddleware = require('../middleware/authMiddleware');
+const jobsController = require('../controllers/jobsController');
+const authMiddleware = require('../../middleware/authMiddleware');
 
+// Route for users to submit a job for review
+router.post('/submit', authMiddleware, jobsController.submitJob);
 
-router.post('/submit', async (req, res) => {
-  try {
-    const job = new Job(req.body);
-    await job.save();
+// Route for admin to create a job directly
+router.post('/create', authMiddleware, jobsController.createJob); // Ensure this is admin-protected
 
-    const user = await User.findById(job.submittedBy);
-    user.points += getPointsForJobType(job.type); // Implement this function
-    if (user.points >= 5) {
-        const ticket = {
-            validUntil: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
-            isActivated: false
-          };
-    
-          user.accessTickets.push(ticket);    
+// Route to get all jobs
+router.get('/', authMiddleware, jobsController.getAllJobs);
 
-          user.points -= 5;
-    }
-    await user.save();
+// Route to get a specific job by ID
+router.get('/:jobId', authMiddleware, jobsController.getJobById);
 
-    res.status(201).send(job);
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
+// Route to update a specific job (typically admin-protected)
+router.put('/:jobId', authMiddleware, jobsController.updateJob);
 
-
-router.get('/', authMiddleware, async (req, res) => {
-    try {
-      const jobs = await Job.find({}); // Add any filters or sorting as needed
-      res.status(200).json(jobs);
-    } catch (error) {
-      res.status(500).send('Error fetching jobs');
-    }
-  });
-
-
-
-  function getPointsForJobType(type) {
-    switch (type) {
-      case 'type1':
-        return 0.33;
-      case 'type2':
-        return 0.25;
-      case 'type3':
-        return 1;
-      default:
-        return 0; // Default case if the type is unknown
-    }
-  }
+// Route to delete a specific job (typically admin-protected)
+router.delete('/:jobId', authMiddleware, jobsController.deleteJob);
 
 module.exports = router;

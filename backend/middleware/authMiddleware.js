@@ -1,3 +1,7 @@
+const express = require('express');
+const router = express.Router();
+
+
 function checkAccess(req, res, next) {
     const user = req.user; // Assuming req.user is set from previous auth middleware
   
@@ -15,7 +19,4 @@ function checkAccess(req, res, next) {
   
 
 
-  router.get('/restricted-area', authMiddleware, checkAccess, (req, res) => {
-    // Route logic for users with valid access tickets
-  });
   
