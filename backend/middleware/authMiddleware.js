@@ -1,22 +1,22 @@
-const express = require('express');
-const router = express.Router();
+const jwt = require('jsonwebtoken');
 
-
-function checkAccess(req, res, next) {
-    const user = req.user; // Assuming req.user is set from previous auth middleware
+  const authMiddleware = (req, res, next) => {
+    const token = req.header('Authorization')?.split(' ')[1];
   
-    // Check if the user has an active, valid ticket
-    const hasAccess = user.accessTickets.some(ticket => 
-      ticket.isActivated && new Date(ticket.validUntil) > new Date()
-    );
-  
-    if (!hasAccess) {
-      return res.status(403).send({ message: "Access denied. No valid ticket found." });
+    if (!token) {
+      return res.status(401).send({ message: 'No token provided, authorization denied' });
     }
   
-    next();
-  }
+    try {
+      // Verify token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = decoded.user; // Set the user in the request
+      next();
+    } catch (err) {
+      res.status(401).send({ message: 'Token is not valid' });
+    }
+  };
   
-
-
+  module.exports = authMiddleware;
+  
   

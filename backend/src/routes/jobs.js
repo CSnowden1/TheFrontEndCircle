@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const jobsController = require('../controllers/jobsController');
+const jobsController = require('../../controllers/jobsController');
 const authMiddleware = require('../../middleware/authMiddleware');
 
 // Route for users to submit a job for review
