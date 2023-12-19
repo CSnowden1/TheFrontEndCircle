@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { auth } from '../firebase-config';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-
+import { Link } from 'react-router-dom';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -25,6 +25,9 @@ function LoginForm() {
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
         <button type="submit">Login</button>
       </form>
+      <p>
+        Don't have an account? <Link to="/register">Register here</Link>
+      </p>
     </div>
   );
 }

@@ -7,6 +7,8 @@ import JobSubmissionPage from './pages/JobSubmissionPage';
 import JobBoardPage from './pages/JobBoardPage';
 import Navigation from './components/nav';
 import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
+
 
 
 
@@ -43,8 +45,7 @@ function App() {
           </ProtectedRoute>
           } />
           <Route path='/login' element={<LoginForm />} />
-          {/* Consider adding a route for the LoginForm */}
-        </Routes>
+          <Route path="/register" element={<RegisterForm />} />        </Routes>
         <Footer />
       </Router>
     </UserContext.Provider>
