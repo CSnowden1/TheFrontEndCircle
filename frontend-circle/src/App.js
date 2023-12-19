@@ -37,7 +37,11 @@ function App() {
               <JobBoardPage />
             </ProtectedRoute>
           } />
-          <Route path="/submit-job" element={<JobSubmissionPage />} />
+          <Route path="/submit-job" element={
+          <ProtectedRoute>
+            <JobSubmissionPage />
+          </ProtectedRoute>
+          } />
           <Route path='/login' element={<LoginForm />} />
           {/* Consider adding a route for the LoginForm */}
         </Routes>
