@@ -1,6 +1,6 @@
 import React from 'react';
-import JobHistory from './JobHistory';
-import QuickJobSubmit from './QuickJobSubmit';
+import JobHistory from '../components/userComponets/SubmissionHistory';
+import QuickJobSubmit from '../components/userComponets/QuickSubmit';
 
 
 function Dashboard({ user }) {
@@ -8,7 +8,7 @@ function Dashboard({ user }) {
     <div>
       <h1>Welcome, {user.name}</h1>
       <JobHistory user={user} />
-      <QuickJobSubmit onJobSubmit={handleJobSubmit} />
+      <QuickJobSubmit />
     </div>
   );
 }

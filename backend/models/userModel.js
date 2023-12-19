@@ -16,8 +16,6 @@ const userSchema = new mongoose.Schema({
   points: { type: Number, default: 0 },
   accessTickets: [accessTicketSchema],
   jobSubmissions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }],
-
-  // New fields
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   city: { type: String, required: true },
@@ -32,5 +30,9 @@ userSchema.pre('save', async function(next) {
   this.password = await bcrypt.hash(this.password, 12);
   next();
 });
+
+
+
+
 
 module.exports = mongoose.model('User', userSchema);

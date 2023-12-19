@@ -4,10 +4,10 @@ const { hashPassword, comparePassword, generateToken } = require('../utils/utili
 
 // User Registration Controller
 exports.register = async (req, res) => {
+  console.log(req.body); // Log the request body
   try {
-    const { username, email, password, state, experience, education, isInUS } = req.body;
-
-    if (isInUS !== 'yes') {
+    const { username, email, password, firstName, lastName, city, state, experience, education, isInUS } = req.body;
+    if (isInUS !== true) {
       return res.status(400).json({ message: "Registration is only allowed for users in the United States." });
     }
 
@@ -25,15 +25,28 @@ exports.register = async (req, res) => {
     }
 
     const hashedPassword = await hashPassword(password);
+    const user = new User({
+      username, 
+      email, 
+      password: hashedPassword, 
+      firstName, 
+      lastName, 
+      city, 
+      state, 
+      experience, 
+      education, 
+      isInUS
+    });
 
-    const user = new User({ username, email, password: hashedPassword, state, experience, education });
     await user.save();
 
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
+    console.error('Registration Error:', error); // Log the error for debugging
     res.status(500).json({ message: 'Error in registration' });
   }
 };
+
 
 
 // User Login Controller

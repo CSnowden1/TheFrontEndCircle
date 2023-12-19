@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { auth } from '../firebase-config';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
+
 
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const history = useHistory();
 
   const login = async (e) => {
     e.preventDefault();
@@ -34,7 +34,7 @@ function LoginForm() {
       }
 
       console.log("User data fetched:", userData);
-      history.push('/dashboard'); // Navigate to dashboard after successful login
+      navigate('/dashboard');
     } catch (error) {
       console.error("Error logging in: ", error);
       setError("Failed to log in. Please check your credentials."); // Display login error

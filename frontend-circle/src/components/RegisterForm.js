@@ -48,8 +48,8 @@ function RegisterForm() {
       if (education === "degree") {
         return setError("Registration is only for self-taught developers or bootcamp graduates.");
       }
-    
-      if (isInUS !== 'yes') {
+       
+      if (isInUS !== true) {
         return setError("Registration is only allowed for users in the United States.");
       }
 
@@ -97,7 +97,7 @@ function RegisterForm() {
             type="radio"
             name="isInUS"
             value="yes"
-            checked={isInUS === 'yes'}
+            checked={isInUS === true}
             onChange={handleUSChange}
           />
           Yes
@@ -107,7 +107,7 @@ function RegisterForm() {
             type="radio"
             name="isInUS"
             value="no"
-            checked={isInUS === 'no'}
+            checked={isInUS === false}
             onChange={handleUSChange}
           />
           No

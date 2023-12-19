@@ -6,14 +6,16 @@ const errorMiddleware = require('./middleware/errorHandleingMiddleware');
 const usersRouter = require('./src/routes/users'); 
 const jobsRouter = require('./src/routes/jobs');
 
-const app = express();
+const app = express(); // Define the app variable by calling express()
+
+// Middleware to parse JSON bodies
+app.use(express.json()); // You only need this line once
 
 // Database Connection
 connectDB();
 
-// Middleware
+// CORS Middleware
 app.use(cors());
-app.use(express.json());
 
 // Routes
 app.use('/api/users', usersRouter);

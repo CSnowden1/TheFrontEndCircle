@@ -8,7 +8,7 @@ import JobBoardPage from './pages/JobBoardPage';
 import Navigation from './components/nav';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
-
+import Dashboard from './pages/Dashboard'
 
 
 
@@ -43,6 +43,11 @@ function App() {
           <ProtectedRoute>
             <JobSubmissionPage />
           </ProtectedRoute>
+          } />
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
           } />
           <Route path='/login' element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />        </Routes>
