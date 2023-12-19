@@ -16,7 +16,15 @@ const userSchema = new mongoose.Schema({
   points: { type: Number, default: 0 },
   accessTickets: [accessTicketSchema],
   jobSubmissions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }],
-  // Additional fields as needed
+
+  // New fields
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  city: { type: String, required: true },
+  state: { type: String, required: true },
+  experience: { type: Number, required: true },
+  education: { type: String, required: true, enum: ['degree', 'bootcamp', 'self-taught'] },
+  isInUS: { type: Boolean, required: true }
 });
 
 userSchema.pre('save', async function(next) {

@@ -16,6 +16,8 @@ function RegisterForm() {
   });
 
   const [isInUS, setIsInUS] = useState('');
+  const [error, setError] = useState('');
+
   
   const handleUSChange = (event) => {
     setIsInUS(event.target.value);
@@ -29,42 +31,59 @@ function RegisterForm() {
 
   const register = async (e) => {
     e.preventDefault();
+    setError('');
 
     if (email !== confirmEmail) {
-      return alert("Emails do not match!");
-    }
-
-    if (password !== confirmPassword) {
-      return alert("Passwords do not match!");
-    }
-
-    if (state !== "United States") {
-      return alert("Registration is only allowed for users in the United States.");
-    }
-
-    if (parseInt(experience) > 2) {
-      return alert("Only users with less than 2 years of experience are allowed.");
-    }
-
-    if (education === "degree") {
-      return alert("Registration is only for self-taught developers or bootcamp graduates.");
-    }
-
-    if (isInUS !== 'yes') {
-        return alert("Registration is only allowed for users in the United States.");
+        return setError("Emails do not match!");
+      }
+    
+      if (password !== confirmPassword) {
+        return setError("Passwords do not match!");
+      }
+    
+      if (parseInt(experience) > 2) {
+        return setError("Only users with less than 2 years of experience are allowed.");
+      }
+    
+      if (education === "degree") {
+        return setError("Registration is only for self-taught developers or bootcamp graduates.");
+      }
+    
+      if (isInUS !== 'yes') {
+        return setError("Registration is only allowed for users in the United States.");
       }
 
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      console.log("Registered successfully!");
-      // Redirect to login page or dashboard after registration
-    } catch (error) {
-      console.error("Error during registration: ", error);
-    }
-  };
-
+      try {
+        // Register with Firebase
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        console.log("Firebase Auth registration successful");
+    
+        // Then, send additional data to your server
+        const response = await fetch('/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            uid: userCredential.user.uid, // Include Firebase UID
+            firstName, lastName, city, state, 
+            experience, education, isInUS: isInUS === 'yes' 
+          }),
+        });
+    
+        const data = await response.json();
+    
+        if (!response.ok) {
+          throw new Error(data.message || 'Error during registration');
+        }
+    
+        console.log("Server-side registration successful!");
+        // Redirect to login page or dashboard after registration
+      } catch (error) {
+        setError(error.message);
+      }
+    };
   return (
     <div>
+        {error && <p className="error-message">{error}</p>}
       <form onSubmit={register}>
         <input type="email" name="email" value={email} onChange={handleChange} placeholder="Email" />
         <input type="email" name="confirmEmail" value={confirmEmail} onChange={handleChange} placeholder="Confirm Email" />
