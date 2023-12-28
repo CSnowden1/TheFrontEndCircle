@@ -10,7 +10,7 @@ const states = ["Alabama", "Alaska", /* ... all other states ... */];
 
 function RegisterForm() {
   const [formData, setFormData] = useState({
-    email: '', confirmEmail: '', password: '', confirmPassword: '',
+    username:'', email: '', confirmEmail: '', password: '', confirmPassword: '',
     firstName: '', lastName: '', city: '', state: '',
     experience: '', education: ''
   });
@@ -23,7 +23,7 @@ function RegisterForm() {
     setIsInUS(event.target.value);
   };
 
-  const { email, confirmEmail, password, confirmPassword, firstName, lastName, city, state, experience, education } = formData;
+  const { username, email, confirmEmail, password, confirmPassword, firstName, lastName, city, state, experience, education } = formData;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -49,22 +49,35 @@ function RegisterForm() {
         return setError("Registration is only for self-taught developers or bootcamp graduates.");
       }
        
-      if (isInUS !== true) {
+      if (isInUS !== 'yes') {
         return setError("Registration is only allowed for users in the United States.");
       }
 
+
       try {
         // Register with Firebase
+        console.log('Registration Data:', {
+          username,
+          email,
+          password,
+          firstName,
+          lastName,
+          city,
+          state,
+          experience,
+          education,
+          isInUS: isInUS === 'yes',
+        });
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         console.log("Firebase Auth registration successful");
     
         // Then, send additional data to your server
-        const response = await fetch('/register', {
+        const response = await fetch('http://localhost:5000/api/users/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
             uid: userCredential.user.uid, // Include Firebase UID
-            firstName, lastName, city, state, 
+            firstName, lastName, city, state, username, password, email,
             experience, education, isInUS: isInUS === 'yes' 
           }),
         });
@@ -85,6 +98,7 @@ function RegisterForm() {
     <div>
         {error && <p className="error-message">{error}</p>}
       <form onSubmit={register}>
+        <input type='username' name='username' value={username} onChange={handleChange} placeholder='Username' />
         <input type="email" name="email" value={email} onChange={handleChange} placeholder="Email" />
         <input type="email" name="confirmEmail" value={confirmEmail} onChange={handleChange} placeholder="Confirm Email" />
         <input type="password" name="password" value={password} onChange={handleChange} placeholder="Password" />
@@ -97,7 +111,7 @@ function RegisterForm() {
             type="radio"
             name="isInUS"
             value="yes"
-            checked={isInUS === true}
+            checked={isInUS === 'yes'}
             onChange={handleUSChange}
           />
           Yes
@@ -107,11 +121,11 @@ function RegisterForm() {
             type="radio"
             name="isInUS"
             value="no"
-            checked={isInUS === false}
+            checked={isInUS === 'no'}  
             onChange={handleUSChange}
           />
           No
-        </label>
+        </label> 
         <select name="state" value={formData.state} onChange={handleChange}>
           <option value="">Select State</option>
           {states.map((state) => (

@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   state: { type: String, required: true },
   experience: { type: Number, required: true },
   education: { type: String, required: true, enum: ['degree', 'bootcamp', 'self-taught'] },
-  isInUS: { type: Boolean, required: true }
+  isInUS: { type: String, required: "yes" }
 });
 
 userSchema.pre('save', async function(next) {
