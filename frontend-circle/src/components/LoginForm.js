@@ -3,59 +3,51 @@ import { auth } from '../firebase-config';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 
-
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate(); // Add this line to get the navigate function
 
   const login = async (e) => {
     e.preventDefault();
     setError('');
-  
+
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log("Logged in with Firebase!");
-  
+
       // Fetch user data from your server
       const token = await userCredential.user.getIdToken(); // Get Firebase Auth token
+
+      // Check if the token is valid (optional)
+      // const isTokenValid = await validateTokenOnServer(token);
+
       const response = await fetch('http://localhost:5000/api/users/login', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`, // Send token for verification
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
-          password, email
+        body: JSON.stringify({
+          password,
+          email,
         }),
       });
-  
-      const responseData = await response.text(); // Capture the response text
-      console.log("Server response:", responseData); // Log the entire response
-  
-      let userData;
-      try {
-        userData = JSON.parse(responseData); // Try to parse the response text as JSON
-      } catch (jsonError) {
-        // Handle the case where the response is not valid JSON
-        console.error("Error parsing JSON: ", jsonError);
-        throw new Error("Invalid server response");
-      }
-  
+
+      const responseData = await response.json();
+
       if (!response.ok) {
-        throw new Error(userData.message || 'Error fetching user data');
+        throw new Error(responseData.message || 'Error logging in');
       }
-  
-      console.log("User data fetched:", userData);
+
+      console.log("User data fetched:", responseData);
       navigate('/dashboard');
     } catch (error) {
       console.error("Error logging in: ", error);
-      setError("Failed to log in. Please check your credentials."); // Display login error
+      setError("Failed to log in. Please check your credentials.");
     }
   };
-  
-  
-  
 
   return (
     <div>
@@ -71,5 +63,6 @@ function LoginForm() {
     </div>
   );
 }
+
 
 export default LoginForm;

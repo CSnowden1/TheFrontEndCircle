@@ -1,22 +1,23 @@
-const admin = require('firebase-admin');
+const { initializeApp } = require('firebase-admin/app'); // Import initializeApp from 'firebase-admin/app'
+const { getAuth } = require('firebase-admin/auth'); // Import getAuth from 'firebase-admin/auth'
+const { applicationDefault } = require('firebase-admin/app');
+const serviceAccount = require('../thefrontendcircle-firebase-adminsdk-kmdlx-f3f4da93bd.json');
 
-// Initialize Firebase Admin SDK (ensure you have the appropriate credentials)
-admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
+initializeApp({
+  credential: applicationDefault(),
 });
-
 // Middleware to verify Firebase Authentication token
 const authMiddleware = async (req, res, next) => {
-  const idToken = req.headers.authorization;
 
+  const idToken = req.headers.authorization.split(' ')[1];
   try {
     if (!idToken) {
       throw new Error('No token provided');
     }
 
-    // Verify the Firebase Authentication token
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
-    
+    // Verify the Firebase Authentication token using Firebase Admin SDK
+    const decodedToken = await getAuth().verifyIdToken(idToken);
+
     // Attach user information to the request for further processing in route handlers
     req.user = {
       uid: decodedToken.uid,
@@ -30,7 +31,5 @@ const authMiddleware = async (req, res, next) => {
     res.status(401).json({ error: 'Unauthorized', message: error.message });
   }
 };
-  
+
 module.exports = authMiddleware;
-  
-  

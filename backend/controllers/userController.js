@@ -25,7 +25,7 @@ exports.register = async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    const hashedPassword = await hashPassword(password);
+    const hashedPassword = await  hashPassword(password);
     const user = new User({
       username, 
       email, 
@@ -48,24 +48,43 @@ exports.register = async (req, res) => {
   }
 };
 
-
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log("We're trying to log you in...");
 
     // Check if user exists
     const user = await User.findOne({ email });
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(400).json({ error: 'Invalid credentials' });
+    if (!user) {
+      // User not found
+      return res.status(400).json({ error: 'User not found', success: false });
+    }
+
+    // Log stored hashed password for debugging
+    console.log('Stored Hashed Password:', user.password);
+
+    // Check if password is correct
+    const isPasswordValid = await comparePassword(password, user.password);
+    console.log('Is Password Valid:', isPasswordValid);
+
+    if (!isPasswordValid) {
+      // Incorrect password
+      return res.status(400).json({ error: 'Invalid credentials', success: false });
     }
 
     // Generate a JWT token
     const token = generateToken(user._id);
-    res.status(200).json({ token });
+
+    // Send success response with token
+    res.status(200).json({ message: 'Login successful', token, success: true });
   } catch (error) {
-    res.status(500).json({ error: 'Error in login' });
+    console.error('Error in login:', error);
+
+    // Send a detailed error response
+    res.status(500).json({ error: error.message || 'Internal server error', success: false });
   }
 };
+
 
 // Get User Profile Controller
 exports.getProfile = async (req, res) => {
