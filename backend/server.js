@@ -5,6 +5,7 @@ const connectDB = require('./config/dbConfig'); // Separate file for DB connecti
 const errorMiddleware = require('./middleware/errorHandleingMiddleware');
 const usersRouter = require('./src/routes/users'); 
 const jobsRouter = require('./src/routes/jobs');
+const firebaseAdmin = require('./config/firebaseAdmin'); 
 
 const app = express(); // Define the app variable by calling express()
 

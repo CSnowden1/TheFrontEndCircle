@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const { hashPassword, comparePassword, generateToken } = require('../utils/utility');
+const bcrypt = require('bcrypt');
 
 
 // User Registration Controller
@@ -48,23 +49,21 @@ exports.register = async (req, res) => {
 };
 
 
-
-// User Login Controller
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
     // Check if user exists
     const user = await User.findOne({ email });
-    if (!user || !(await comparePassword(password, user.password))) {
-      return res.status(400).send('Invalid credentials');
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return res.status(400).json({ error: 'Invalid credentials' });
     }
 
     // Generate a JWT token
     const token = generateToken(user._id);
     res.status(200).json({ token });
   } catch (error) {
-    res.status(500).send('Error in login');
+    res.status(500).json({ error: 'Error in login' });
   }
 };
 

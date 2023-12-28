@@ -12,27 +12,40 @@ function LoginForm() {
   const login = async (e) => {
     e.preventDefault();
     setError('');
-
+  
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log("Logged in with Firebase!");
-
+  
       // Fetch user data from your server
       const token = await userCredential.user.getIdToken(); // Get Firebase Auth token
-      const response = await fetch('/userdata', {
-        method: 'GET',
+      const response = await fetch('http://localhost:5000/api/users/login', {
+        method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`, // Send token for verification
           'Content-Type': 'application/json'
         },
+        body: JSON.stringify({ 
+          password, email
+        }),
       });
-
-      const userData = await response.json();
-
+  
+      const responseData = await response.text(); // Capture the response text
+      console.log("Server response:", responseData); // Log the entire response
+  
+      let userData;
+      try {
+        userData = JSON.parse(responseData); // Try to parse the response text as JSON
+      } catch (jsonError) {
+        // Handle the case where the response is not valid JSON
+        console.error("Error parsing JSON: ", jsonError);
+        throw new Error("Invalid server response");
+      }
+  
       if (!response.ok) {
         throw new Error(userData.message || 'Error fetching user data');
       }
-
+  
       console.log("User data fetched:", userData);
       navigate('/dashboard');
     } catch (error) {
@@ -40,6 +53,9 @@ function LoginForm() {
       setError("Failed to log in. Please check your credentials."); // Display login error
     }
   };
+  
+  
+  
 
   return (
     <div>

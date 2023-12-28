@@ -1,22 +1,36 @@
-const jwt = require('jsonwebtoken');
+const admin = require('firebase-admin');
 
-  const authMiddleware = (req, res, next) => {
-    const token = req.header('Authorization')?.split(' ')[1];
-  
-    if (!token) {
-      return res.status(401).send({ message: 'No token provided, authorization denied' });
+// Initialize Firebase Admin SDK (ensure you have the appropriate credentials)
+admin.initializeApp({
+  credential: admin.credential.applicationDefault(),
+});
+
+// Middleware to verify Firebase Authentication token
+const authMiddleware = async (req, res, next) => {
+  const idToken = req.headers.authorization;
+
+  try {
+    if (!idToken) {
+      throw new Error('No token provided');
     }
+
+    // Verify the Firebase Authentication token
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    
+    // Attach user information to the request for further processing in route handlers
+    req.user = {
+      uid: decodedToken.uid,
+      email: decodedToken.email,
+      // Add other relevant user information if needed
+    };
+
+    // Continue to the next middleware or route handler
+    next();
+  } catch (error) {
+    res.status(401).json({ error: 'Unauthorized', message: error.message });
+  }
+};
   
-    try {
-      // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      req.user = decoded.user; // Set the user in the request
-      next();
-    } catch (err) {
-      res.status(401).send({ message: 'Token is not valid' });
-    }
-  };
-  
-  module.exports = authMiddleware;
+module.exports = authMiddleware;
   
   
