@@ -22,7 +22,7 @@ const authMiddleware = async (req, res, next) => {
     req.user = {
       uid: decodedToken.uid,
       email: decodedToken.email,
-      // Add other relevant user information if needed
+      password: decodedToken.password,
     };
 
     // Continue to the next middleware or route handler

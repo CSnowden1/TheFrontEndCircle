@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext} from 'react';
 import { auth } from '../firebase-config';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
+import UserContext from '../context/userContext';
+
+
 
 function LoginForm() {
+  const { login } = useContext(UserContext);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [user, setUser] = useState(null);
   const navigate = useNavigate(); // Add this line to get the navigate function
 
-  const login = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -41,6 +47,8 @@ function LoginForm() {
         throw new Error(responseData.message || 'Error logging in');
       }
 
+
+      login(responseData);
       console.log("User data fetched:", responseData);
       navigate('/dashboard');
     } catch (error) {
@@ -52,7 +60,7 @@ function LoginForm() {
   return (
     <div>
       {error && <p className="error-message">{error}</p>}
-      <form onSubmit={login}>
+      <form onSubmit={handleLogin}>
         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
         <button type="submit">Login</button>

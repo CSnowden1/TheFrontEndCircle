@@ -1,6 +1,7 @@
 const User = require('../models/userModel');
-const { hashPassword, comparePassword, generateToken } = require('../utils/utility');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+const { hashPassword, comparePassword, generateToken, getSecretKey } = require('../utils/utility');
 
 
 // User Registration Controller
@@ -25,7 +26,7 @@ exports.register = async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    const hashedPassword = await  hashPassword(password);
+    const hashedPassword = await hashPassword(password);
     const user = new User({
       username, 
       email, 
@@ -59,9 +60,10 @@ exports.login = async (req, res) => {
       // User not found
       return res.status(400).json({ error: 'User not found', success: false });
     }
-
+  console.log('User Object:', user);
     // Log stored hashed password for debugging
     console.log('Stored Hashed Password:', user.password);
+    console.log('Entered Password:', password);
 
     // Check if password is correct
     const isPasswordValid = await comparePassword(password, user.password);
@@ -72,8 +74,9 @@ exports.login = async (req, res) => {
       return res.status(400).json({ error: 'Invalid credentials', success: false });
     }
 
-    // Generate a JWT token
-    const token = generateToken(user._id);
+
+    const token = generateToken(user._id);  
+
 
     // Send success response with token
     res.status(200).json({ message: 'Login successful', token, success: true });

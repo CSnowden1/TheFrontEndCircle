@@ -9,26 +9,34 @@ import Navigation from './components/nav';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import Dashboard from './pages/Dashboard'
+import UserContext from './context/userContext';
 
 
-
-export const UserContext = createContext(null);
 
 function ProtectedRoute({ children }) {
   const { user } = useContext(UserContext);
 
   if (!user) {
+    console.log('User not authenticated. Redirecting to home.');
     return <Navigate to="/" />;
   }
 
   return children;
 }
 
+
+
 function App() {
   const [user, setUser] = useState(null);
 
+
+  const login = (userData) => {
+    setUser(userData);
+  };
+
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, login }}>
       <Router>
         <Header />
         <Navigation />
@@ -50,7 +58,8 @@ function App() {
             </ProtectedRoute>
           } />
           <Route path='/login' element={<LoginForm />} />
-          <Route path="/register" element={<RegisterForm />} />        </Routes>
+          <Route path="/register" element={<RegisterForm />} />        
+        </Routes>
         <Footer />
       </Router>
     </UserContext.Provider>
