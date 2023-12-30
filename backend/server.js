@@ -6,6 +6,8 @@ const connectDB = require('./config/dbConfig'); // Separate file for DB connecti
 const errorMiddleware = require('./middleware/errorHandleingMiddleware');
 const usersRouter = require('./src/routes/users');
 const jobsRouter = require('./src/routes/jobs');
+const adminRouter = require('./src/routes/admin');
+const ownerRouter = require('./src/routes/owner');
 
 const app = express();
 
@@ -21,6 +23,9 @@ app.use(cors());
 // Routes
 app.use('/api/users', usersRouter);
 app.use('/api/jobs', jobsRouter);
+app.use('/api/admin', adminRouter);
+app.use('/api/owner', ownerRouter);
+
 
 // Error Handling Middleware
 app.use(errorMiddleware);
