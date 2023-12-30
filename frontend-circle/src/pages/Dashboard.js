@@ -2,6 +2,8 @@ import React from 'react';
 import JobHistory from '../components/userComponets/SubmissionHistory';
 import QuickJobSubmit from '../components/userComponets/QuickSubmit';
 import UserContext from '../context/userContext';
+import { Link } from 'react-router-dom';
+
 
 const Dashboard = ({ user }) => {
 
@@ -12,6 +14,7 @@ const Dashboard = ({ user }) => {
       <h3>Your Currently have {user.user.points} points</h3>
       <h3>You currently have {user.user.accessTickets.length} Access Tickets Available</h3>
       <QuickJobSubmit user={user} />
+      <Link to="/dashboard/adminregister">Become An Admin</Link>
     </div>
   );
 };

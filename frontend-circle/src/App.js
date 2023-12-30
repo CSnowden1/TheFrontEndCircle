@@ -10,8 +10,7 @@ import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import Dashboard from './pages/Dashboard'
 import UserContext from './context/userContext';
-
-
+import AdminRequestPage from  './pages/adminRequestPage';
 
 function ProtectedRoute({ children }) {
   const { user } = useContext(UserContext);
@@ -21,7 +20,7 @@ function ProtectedRoute({ children }) {
     return <Navigate to="/" />;
   }
 
-  return <Dashboard user={user}>{children}</Dashboard>;
+  return <AdminRequestPage user={user}>{children}</AdminRequestPage> && <Dashboard user={user}>{children}</Dashboard>;
 }
 
 
@@ -57,6 +56,11 @@ function App() {
               <Dashboard />
             </ProtectedRoute>
           } />
+          <Route path="/dashboard/adminregister" element={
+             <ProtectedRoute>
+                <AdminRequestPage />
+            </ProtectedRoute>
+          } /> 
           <Route path='/login' element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />        
         </Routes>
