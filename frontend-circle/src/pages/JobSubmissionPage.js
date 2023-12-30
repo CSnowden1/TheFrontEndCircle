@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 function JobSubmissionPage() {
   const [jobTitle, setJobTitle] = useState('');
-  // Add more state variables for other form fields
 
   const handleSubmit = (event) => {
     event.preventDefault();

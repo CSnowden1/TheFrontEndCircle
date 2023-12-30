@@ -4,7 +4,7 @@ const jobsController = require('../../controllers/jobsController');
 const authMiddleware = require('../../middleware/authMiddleware');
 
 // Route for users to submit a job for review
-router.post('/submit', authMiddleware, jobsController.submitJob);
+router.post('/submit', jobsController.submitJob);
 
 // Route for admin to create a job directly
 router.post('/create', authMiddleware, jobsController.createJob); // Ensure this is admin-protected

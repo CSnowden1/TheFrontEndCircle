@@ -1,29 +1,29 @@
 const Job = require('../models/jobModel');
 const User = require('../models/userModel');
 
+exports.submitJob = async (req, res) => {
+  try {
+    const jobDetails = req.body;
+    const username = jobDetails.user; // Assuming the field is named 'user'
 
+    const user = await User.findOne({ username });
 
-
-  // Controller for users submitting a job for review
-  exports.submitJob = async (req, res) => {
-    try {
-      const submittedJob = new Job({ ...req.body, status: 'pending' });
-      await submittedJob.save();
-  
-      // Update user's points
-      if (req.body.submittedBy) {
-        const user = await User.findById(req.body.submittedBy);
-        if (user) {
-          user.points += getPointsForJobType(submittedJob.type);
-          await user.save();
-        }
-      }
-  
-      res.status(201).json(submittedJob);
-    } catch (error) {
-      res.status(400).send('Error submitting job');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
-  };
+
+    const newJob = new Job({ ...jobDetails });
+    user.jobSubmissions.push(newJob._id); // Push Job ID to User's jobSubmissions array
+    await Promise.all([newJob.save(), user.save()]); // Save both the job and user in parallel
+
+    res.status(201).json(newJob);
+  } catch (error) {
+    console.error('Error submitting job:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
 
 // Controller for admin creating an approved job posting
 exports.createJob = async (req, res) => {

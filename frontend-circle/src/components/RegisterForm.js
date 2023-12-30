@@ -74,7 +74,7 @@ function RegisterForm() {
         // Then, send additional data to your server
         const response = await fetch('http://localhost:5000/api/users/register', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', },
           body: JSON.stringify({ 
             uid: userCredential.user.uid, // Include Firebase UID
             firstName, lastName, city, state, username, password, email,

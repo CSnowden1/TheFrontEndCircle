@@ -27,11 +27,6 @@ const jobSchema = new mongoose.Schema({
     required: true,
     enum: ['onsite', 'remote', 'hybrid'] // Job location types
   },
-  postedBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
   status: {
     type: String,
     enum: ['pending', 'approved', 'rejected'],
@@ -41,7 +36,6 @@ const jobSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  // Additional fields as necessary
 });
 
 const Job = mongoose.model('Job', jobSchema);

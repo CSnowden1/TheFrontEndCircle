@@ -21,7 +21,7 @@ function ProtectedRoute({ children }) {
     return <Navigate to="/" />;
   }
 
-  return children;
+  return <Dashboard user={user}>{children}</Dashboard>;
 }
 
 
