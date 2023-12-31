@@ -11,7 +11,6 @@
 //Admin Id
 
 const mongoose = require('mongoose');
-const User = require('./userModel');
 
 const adminSchema = new mongoose.Schema({
   // Common fields for all users (inherited from User)
@@ -82,6 +81,4 @@ const adminSchema = new mongoose.Schema({
 });
 
 // Creating the Admin model by extending the User model
-const Admin = User.discriminator('Admin', adminSchema);
-
-module.exports = Admin;
+module.exports = mongoose.model('Admin', adminSchema);

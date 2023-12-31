@@ -12,7 +12,7 @@ const AdminRequestPage = () => {
   return (
     <div>
       <h1>Welcome to your Dashboard, {user.user.username}!</h1>
-        <AdminRequest />
+        <AdminRequest user={user} />
     </div>
   );
 };
