@@ -62,18 +62,30 @@ const ownerSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Admin',
+      note: {
+        type: String,
+        required: true,
+      },
     },
   ],
   removedAdmins: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Admin',
+      note: {
+        type: String,
+        required: true,
+      },
     },
   ],
   addedAdmins: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Admin',
+      note: {
+        type: String,
+        required: true,
+      },
     },
   ],
   jobsAdded: [
@@ -86,24 +98,40 @@ const ownerSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Job',
+      note: {
+        type: String,
+        required: true,
+      },
     },
   ],
   jobsEdited: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Job',
+      note: {
+        type: String,
+        required: true,
+      },
     },
   ],
   accountsBlocked: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
+      note: {
+        type: String,
+        required: true,
+      },
     },
   ],
   accountsSuspended: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
+      note: {
+        type: String,
+        required: true,
+      },
     },
   ],
   adminId: {
@@ -113,6 +141,4 @@ const ownerSchema = new mongoose.Schema({
 });
 
 
-const Owner = User.discriminator('Owner', ownerSchema);
-
-module.exports = Owner;
+module.exports = mongoose.model('Owner', ownerSchema);

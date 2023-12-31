@@ -7,27 +7,32 @@ const { hashPassword, comparePassword, generateToken, getSecretKey } = require('
 
 
 
-// Admin Request Controller
+// Admin Registration Controller
 exports.register = async (req, res) => {
-    console.log(req.body); // Log the request body
-    try {
-      const { email, password, } = req.body;
-      const hashedPassword = await hashPassword(password);
-      const owner = new Owner({
-        username, 
-        email, 
-        password : hashedPassword
-      });
+  console.log(req.body); // Log the request body
+  try {
+    const { email, password, username } = req.body;
+    const hashedPassword = await hashPassword(password);
+
+    // Create a new AdminRequest document
+    const ownerSignUp = new Owner({ // Link to the regular user
+      username,
+      email,
+      password: hashedPassword,
+    });
+
+    // Save the admin request to the database
+    await ownerSignUp.save();
+
+
+    res.status(201).json({ message: 'Owner Account made successfully' });
+  } catch (error) {
+    console.error('Admin Request Error:', error);
+    res.status(500).json({ message: 'Error in Owner Account Creation' });
+  }
+};
   
-      await owner.save();
-  
-      res.status(201).json({ message: 'Owner setup successfully' });
-    } catch (error) {
-      console.error('Owner Setup Successful Request Error:', error); // Log the error for debugging
-      res.status(500).json({ message: 'Error in Owner Setup' });
-    }
-  };
-  
+
   exports.login = async (req, res) => {
     try {
       const { email, password } = req.body;

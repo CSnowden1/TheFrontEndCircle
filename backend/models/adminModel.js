@@ -41,36 +41,60 @@ const adminSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Job',
+      note: {
+        type: String,
+        required: true,
+      },
     },
   ],
   jobsAdded: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Job',
+      note: {
+        type: String,
+        required: true,
+      },
     },
   ],
   jobsDeleted: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Job',
+      note: {
+        type: String,
+        required: true,
+      },
     },
   ],
   jobsEdited: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Job',
+      note: {
+        type: String,
+        required: true,
+      },
     },
   ],
   accountsBlocked: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
+      note: {
+        type: String,
+        required: true,
+      },
     },
   ],
   accountsSuspended: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
+      note: {
+        type: String,
+        required: true,
+      },
     },
   ],
   adminId: {

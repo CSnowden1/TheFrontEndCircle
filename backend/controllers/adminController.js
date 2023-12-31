@@ -5,7 +5,7 @@ const crypto = require('crypto');
 const { hashPassword, comparePassword, generateToken, getSecretKey } = require('../utils/utility');
 
 
-// User Registration Controller
+// Admin Registration Controller
 exports.register = async (req, res) => {
   console.log(req.body); // Log the request body
   try {
