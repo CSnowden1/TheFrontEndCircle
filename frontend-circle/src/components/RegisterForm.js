@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 
 
-const states = ["Alabama", "Alaska", /* ... all other states ... */];
+const states = ["Alabama", "Alaska", "Maryland" /* ... all other states ... */];
 
 
 

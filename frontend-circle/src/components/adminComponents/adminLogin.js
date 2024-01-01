@@ -1,14 +1,13 @@
 
-import React, { useState, useContext} from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
-import UserContext from '../../context/userContext';
-
+import React, { useState } from 'react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUser } from '../../context/userContext';
 
 
 function AdminLoginForm() {
-  const { Adminlogin } = useContext(UserContext);
-
-  const [adminId, setAdminId ] = useSate('');
+  const { login } = useUser();
+  const [adminId, setAdminId ] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [user, setUser] = useState(null);
@@ -22,8 +21,7 @@ function AdminLoginForm() {
 
       const response = await fetch('http://localhost:5000/api/admin/login', {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`, // Send token for verification
+        headers: { // Send token for verification
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -50,6 +48,7 @@ function AdminLoginForm() {
 
   return (
     <div>
+      <h2>Admin Login</h2>
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleLogin}>
         <input type="admin id" value={adminId} onChange={(e) => setAdminId(e.target.value)} placeholder="adminId" />
@@ -64,4 +63,4 @@ function AdminLoginForm() {
 }
 
 
-export default LoginForm;
+export default AdminLoginForm;

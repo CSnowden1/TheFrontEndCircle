@@ -15,6 +15,8 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   points: { type: Number, default: 0 },
   accessTickets: [accessTicketSchema],
+  isOwner: { type: Boolean, default: false },
+  isAdmin:  {  type: Boolean, default: false },
   jobSubmissions: [
     {
       title: String,

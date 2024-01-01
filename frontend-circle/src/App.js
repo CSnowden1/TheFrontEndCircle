@@ -12,6 +12,8 @@ import Dashboard from './pages/Dashboard';
 import AdminRequestPage from './pages/adminRequestPage';
 import { UserProvider } from './context/userContext'; // Import UserProvider
 import { useUser } from './context/userContext';
+import AdminLogin from './components/adminComponents/adminLogin'
+import OwnerLogin from './components/ownerComponents/ownerLogin'
 
 function ProtectedRoute({ children }) {
   const { user } = useUser();
@@ -44,6 +46,8 @@ function App() {
           <Route path="/dashboard/adminregister" element={<ProtectedRoute><AdminRequestPage /></ProtectedRoute>} />
           <Route path='/login' element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
+          <Route path="/admin" element={<ProtectedRoute><AdminLogin /></ProtectedRoute >}/>
+          <Route path="/owner" element={<ProtectedRoute><OwnerLogin /></ProtectedRoute >}/>
         </Routes>
         <Footer />
       </Router>

@@ -1,16 +1,14 @@
 
-import React, { useState, useContext} from 'react';
-import { auth } from '../../firebase-config';
+import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
-import UserContext from '../../context/userContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUser } from '../../context/userContext';
 
 
 
-function AdminLoginForm() {
-  const { Ownerlogin } = useContext(UserContext);
-
-  const [ownerId, setOwnerId ] = useSate('');
+function OwnerLoginForm() {
+  const { login } = useUser();
+  const [email, setEmail ] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [user, setUser] = useState(null);
@@ -21,7 +19,6 @@ function AdminLoginForm() {
     setError('');
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log("Logged in with Firebase!");
 
       // Fetch user data from your server
@@ -32,8 +29,7 @@ function AdminLoginForm() {
 
       const response = await fetch('http://localhost:5000/api/owner/login', {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`, // Send token for verification
+        headers: { // Send token for verification
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -60,9 +56,10 @@ function AdminLoginForm() {
 
   return (
     <div>
+      <h2>Owner Login</h2>
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleLogin}>
-        <input type="Owner id" value={adminId} onChange={(e) => setOwnerId(e.target.value)} placeholder="Your Id" />
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Your Id" />
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
         <button type="submit">Login</button>
       </form>
@@ -71,4 +68,4 @@ function AdminLoginForm() {
 }
 
 
-export default LoginForm;
+export default OwnerLoginForm;
