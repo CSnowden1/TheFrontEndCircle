@@ -2,11 +2,11 @@ import React, { useState, useContext } from 'react';
 import { auth } from '../firebase-config';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
-import { useUser } from '../context/userContext';
+import { useNormalUser } from '../context/userContext';
 
 
 function LoginForm() {
-  const { login } = useUser();
+  const { login } = useNormalUser();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');

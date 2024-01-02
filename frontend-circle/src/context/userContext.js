@@ -1,26 +1,65 @@
-// userContext.js
 import React, { createContext, useContext, useState } from 'react';
 
-const UserContext = createContext();
+// Normal User Context
+const NormalUserContext = createContext();
+
+// Admin Context
+const AdminContext = createContext();
+
+// Owner Context
+const OwnerContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  // Separate states for normal user, admin, and owner
+  const [normalUser, setNormalUser] = useState(null);
+  const [admin, setAdmin] = useState(null);
+  const [owner, setOwner] = useState(null);
 
-  const login = (userData) => {
-    setUser(userData);
+  // Login functions for each user role
+  const loginNormalUser = (userData) => {
+    setNormalUser(userData);
+  };
+
+  const loginAdmin = (adminData) => {
+    setAdmin(adminData);
+  };
+
+  const loginOwner = (ownerData) => {
+    setOwner(ownerData);
   };
 
   return (
-    <UserContext.Provider value={{ user, login }}>
-      {children}
-    </UserContext.Provider>
+    <NormalUserContext.Provider value={{ user: normalUser, login: loginNormalUser }}>
+      <AdminContext.Provider value={{ user: admin, login: loginAdmin }}>
+        <OwnerContext.Provider value={{ user: owner, login: loginOwner }}>
+          {children}
+        </OwnerContext.Provider>
+      </AdminContext.Provider>
+    </NormalUserContext.Provider>
   );
 };
 
-export const useUser = () => {
-  const context = useContext(UserContext);
+// Custom hooks for each user role
+export const useNormalUser = () => {
+  const context = useContext(NormalUserContext);
   if (!context) {
-    throw new Error('useUser must be used within a UserProvider');
+    throw new Error('useNormalUser must be used within a UserProvider');
+  }
+  return context;
+};
+
+export const useAdmin = () => {
+  const context = useContext(AdminContext);
+  if (!context) {
+    throw new Error('useAdmin must be used within a UserProvider');
+  }
+  return context;
+};
+
+export const useOwner = () => {
+  const context = useContext(OwnerContext);
+  if (!context) {
+    throw new Error('useOwner must be used within a UserProvider');
   }
   return context;
 };

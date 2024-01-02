@@ -1,27 +1,24 @@
-
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
-import { useUser } from '../../context/userContext';
-
+import { useAdmin } from '../../context/userContext';
 
 function AdminLoginForm() {
-  const { login } = useUser();
-  const [adminId, setAdminId ] = useState('');
+  const { login } = useAdmin();
+  const [adminId, setAdminId] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [user, setUser] = useState(null);
-  const navigate = useNavigate(); // Add this line to get the navigate function
+  const [adminState, setAdminState] = useState(null); // Additional state for admin data
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
 
     try {
-
       const response = await fetch('http://localhost:5000/api/admin/login', {
         method: 'POST',
-        headers: { // Send token for verification
+        headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -36,9 +33,9 @@ function AdminLoginForm() {
         throw new Error(responseData.message || 'Error logging in');
       }
 
-
       login(responseData);
-      console.log("User data fetched:", responseData);
+      setAdminState(responseData); // Set admin state with the fetched data
+      console.log("Admin data fetched:", responseData);
       navigate('/dashboard');
     } catch (error) {
       console.error("Error logging in: ", error);
@@ -58,9 +55,13 @@ function AdminLoginForm() {
       <p>
         Not an Admin? <Link to="/dashboard/adminregister">Send a request here</Link>
       </p>
+      {adminState && (
+        <div>
+          <h3>Welcome, {adminState.username}!</h3>
+        </div>
+      )}
     </div>
   );
 }
-
 
 export default AdminLoginForm;

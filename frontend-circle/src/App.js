@@ -11,12 +11,12 @@ import RegisterForm from './components/RegisterForm';
 import Dashboard from './pages/Dashboard';
 import AdminRequestPage from './pages/adminRequestPage';
 import { UserProvider } from './context/userContext'; // Import UserProvider
-import { useUser } from './context/userContext';
+import { useNormalUser } from './context/userContext';
 import AdminLogin from './components/adminComponents/adminLogin'
 import OwnerLogin from './components/ownerComponents/ownerLogin'
 
 function ProtectedRoute({ children }) {
-  const { user } = useUser();
+  const { user } = useNormalUser();
 
   if (!user) {
     console.log('User not authenticated. Redirecting to home.');

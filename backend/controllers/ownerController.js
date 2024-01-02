@@ -35,14 +35,17 @@ exports.register = async (req, res) => {
 
   exports.login = async (req, res) => {
     try {
-      const { email, password } = req.body;
+      console.log(req.body);
+      console.log(req.body.ownerEmail)
+      const { password, ownerEmail } = req.body;
       console.log("We're trying to log you in...");
+      console.log(ownerEmail);
   
       // Check if user exists
-      const owner = await Owner.findOne({ email });
+      const owner = await Owner.findOne({ email: ownerEmail });
       if (!owner) {
         // User not found
-        return res.status(400).json({ error: 'Admin not found', success: false });
+        return res.status(400).json({ error: 'Owner not found', success: false });
       }
     console.log('User Object:', owner);
       // Log stored hashed password for debugging
@@ -59,11 +62,10 @@ exports.register = async (req, res) => {
       }
   
   
-      const token = generateToken(owner._id);  
   
   
       // Send success response with token
-      res.status(200).json({ message: 'Login successful', token, owner });
+      res.status(200).json({ message: 'Login successful', owner });
     } catch (error) {
       console.error('Error in login:', error);
   
