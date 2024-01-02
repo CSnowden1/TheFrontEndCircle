@@ -6,5 +6,4 @@ const adminController = require('../../controllers/adminController');
 router.post('/register', adminController.register);
 router.post('/login', authMiddleware, adminController.login);
 
-
 module.exports = router;

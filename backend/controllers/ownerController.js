@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const Owner = require('../models/ownerModel');
+const Admin = require('../models/adminModel');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const { hashPassword, comparePassword, generateToken, getSecretKey } = require('../utils/utility');
@@ -74,3 +75,15 @@ exports.register = async (req, res) => {
     }
   };
   
+
+  
+// Controller for retrieving all job postings
+exports.adminRequests = async (req, res) => {
+  try {
+    const jobs = await Admin.find({ status: "pending"});
+    res.json(jobs);
+  } catch (error) {
+    res.status(500).send('Error fetching Admin Requests');
+  }
+};
+

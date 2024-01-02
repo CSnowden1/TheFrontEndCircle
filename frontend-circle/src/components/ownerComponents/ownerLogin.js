@@ -8,7 +8,8 @@ function OwnerLoginForm() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [ownerState, setOwnerState] = useState(null);
-  const [pendingJobs, setPendingJobs] = useState(null); // Additional state for owner data
+  const [pendingJobs, setPendingJobs] = useState(null);
+  const [adminRequests, setAdminRequests] = useState(null); // Additional state for owner data
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -40,11 +41,21 @@ function OwnerLoginForm() {
         }
       });
 
+      const adminRequests = await fetch('http://localhost:5000/api/owner/requests', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+
+      const adminRequestData = await adminRequests.json();
       const pendingJobData = await pendingJobSubmissions.json();
 
       setPendingJobs(pendingJobData);
+      setAdminRequests(adminRequestData);
+      console.log(adminRequestData);
 
-      console.log(pendingJobData);
 
       login(responseData);
       setOwnerState(responseData); // Set owner state with the fetched data
@@ -69,6 +80,30 @@ function OwnerLoginForm() {
         <div>
           <h3>Welcome {ownerState.owner.username}!</h3>
           <div> <h3>Pending Admin Request</h3>
+          <table>
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Password</th>
+          <th>Is Admin</th>
+          {/* Add more columns as needed */}
+        </tr>
+      </thead>
+      <tbody>
+        {adminRequests.map((user, index) => (
+          <tr key={index}>
+            <td>{user._id}</td>
+            <td>{user.username}</td>
+            <td>{user.email}</td>
+            <td>{user.password}</td>
+            <td>{user.isAdmin ? 'Yes' : 'No'}</td>
+            {/* Add more cells for additional columns */}
+          </tr>
+        ))}
+      </tbody>
+    </table>
           
           </div>
           <div> <h3>Pending Job Submissions</h3>

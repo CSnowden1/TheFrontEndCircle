@@ -30,9 +30,12 @@ const adminSchema = new mongoose.Schema({
   },
   isAdmin: {
     type: Boolean,
-    default: true,
+    default: false,
   },
-  // Admin-specific fields
+  status: {
+    type: String,
+    default: "pending",
+  },
   pointsGivenOut: {
     type: Number,
     default: 0,

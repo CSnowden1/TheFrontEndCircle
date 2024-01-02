@@ -5,5 +5,6 @@ const ownerController = require('../../controllers/ownerController');
 
 router.post('/register', ownerController.register);
 router.post('/login', ownerController.login);
+router.get('/requests', ownerController.adminRequests);
 
 module.exports = router;
