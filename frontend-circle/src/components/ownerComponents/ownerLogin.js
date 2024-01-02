@@ -7,7 +7,8 @@ function OwnerLoginForm() {
   const [ownerEmail, setOwnerEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [ownerState, setOwnerState] = useState(null); // Additional state for owner data
+  const [ownerState, setOwnerState] = useState(null);
+  const [pendingJobs, setPendingJobs] = useState(null); // Additional state for owner data
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -32,6 +33,19 @@ function OwnerLoginForm() {
         throw new Error(responseData.message || 'Error logging in');
       }
 
+      const pendingJobSubmissions = await fetch('http://localhost:5000/api/jobs/', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      const pendingJobData = await pendingJobSubmissions.json();
+
+      setPendingJobs(pendingJobData);
+
+      console.log(pendingJobData);
+
       login(responseData);
       setOwnerState(responseData); // Set owner state with the fetched data
       console.log("Owner data fetched:", responseData);
@@ -51,12 +65,45 @@ function OwnerLoginForm() {
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
         <button type="submit">Login</button>
       </form>
-
-      {/* Conditionally render components based on ownerState */}
       {ownerState && (
         <div>
           <h3>Welcome {ownerState.owner.username}!</h3>
-          {/* Render additional components or information based on ownerState */}
+          <div> <h3>Pending Admin Request</h3>
+          
+          </div>
+          <div> <h3>Pending Job Submissions</h3>
+          <table>
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Created At</th>
+          <th>Description</th>
+          <th>Job Location Type</th>
+          <th>Location</th>
+          <th>Status</th>
+          <th>Title</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        {pendingJobs.map((job, index) => (
+          <tr key={index}>
+            <td>{job.company}</td>
+            <td>{job.createdAt}</td>
+            <td>{job.description}</td>
+            <td>{job.jobLocationType}</td>
+            <td>{job.location}</td>
+            <td>{job.status}</td>
+            <td>{job.title}</td>
+            <td>{job.type}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+          </div>
+          <div> <h3>Job Acceptance History</h3>
+
+          </div>
         </div>
       )}
     </div>

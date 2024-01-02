@@ -10,7 +10,7 @@ router.post('/submit', jobsController.submitJob);
 router.post('/create', authMiddleware, jobsController.createJob); // Ensure this is admin-protected
 
 // Route to get all jobs
-router.get('/', authMiddleware, jobsController.getAllJobs);
+router.get('/', jobsController.getAllJobs);
 
 // Route to get a specific job by ID
 router.get('/:jobId', authMiddleware, jobsController.getJobById);

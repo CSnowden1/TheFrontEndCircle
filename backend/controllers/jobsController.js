@@ -43,7 +43,7 @@ exports.createJob = async (req, res) => {
 // Controller for retrieving all job postings
 exports.getAllJobs = async (req, res) => {
     try {
-      const jobs = await Job.find({});
+      const jobs = await Job.find({ status: "pending"});
       res.json(jobs);
     } catch (error) {
       res.status(500).send('Error fetching jobs');
