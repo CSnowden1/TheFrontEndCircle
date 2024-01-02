@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAdmin } from '../../context/userContext';
+import PendingJobs from '../adminComponents/pendingJobsTable'
 
 function AdminLoginForm() {
   const { login } = useAdmin();
   const [adminId, setAdminId] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [adminState, setAdminState] = useState(null); // Additional state for admin data
+  const [adminState, setAdminState] = useState(null);
+  const [pendingJobs, setPendingJobs] = useState(null);
+
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -27,12 +30,26 @@ function AdminLoginForm() {
         }),
       });
 
+
+      const pendingJobSubmissions = await fetch('http://localhost:5000/api/jobs/pending', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+
+      
       const responseData = await response.json();
+      const pendingJobData = await pendingJobSubmissions.json();
+
 
       if (!response.ok) {
         throw new Error(responseData.message || 'Error logging in');
       }
 
+      
+      setPendingJobs(pendingJobData);
       login(responseData);
       setAdminState(responseData); // Set admin state with the fetched data
       console.log("Admin data fetched:", responseData);
@@ -58,6 +75,7 @@ function AdminLoginForm() {
       {adminState && (
         <div>
           <h3>Welcome, {adminState.username}!</h3>
+          <PendingJobs jobData={pendingJobData} />
         </div>
       )}
     </div>

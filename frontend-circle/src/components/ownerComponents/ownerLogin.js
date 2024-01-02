@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOwner } from '../../context/userContext';
+import PendingJobs from '../adminComponents/pendingJobsTable';
+import pendingAdmins from './adminRequestTable';
 
 function OwnerLoginForm() {
   const { login } = useOwner();
@@ -34,7 +36,7 @@ function OwnerLoginForm() {
         throw new Error(responseData.message || 'Error logging in');
       }
 
-      const pendingJobSubmissions = await fetch('http://localhost:5000/api/jobs/', {
+      const pendingJobSubmissions = await fetch('http://localhost:5000/api/jobs/pending', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -79,63 +81,8 @@ function OwnerLoginForm() {
       {ownerState && (
         <div>
           <h3>Welcome {ownerState.owner.username}!</h3>
-          <div> <h3>Pending Admin Request</h3>
-          <table>
-      <thead>
-        <tr>
-          <th>User ID</th>
-          <th>Username</th>
-          <th>Email</th>
-          <th>Password</th>
-          <th>Is Admin</th>
-          {/* Add more columns as needed */}
-        </tr>
-      </thead>
-      <tbody>
-        {adminRequests.map((user, index) => (
-          <tr key={index}>
-            <td>{user._id}</td>
-            <td>{user.username}</td>
-            <td>{user.email}</td>
-            <td>{user.password}</td>
-            <td>{user.isAdmin ? 'Yes' : 'No'}</td>
-            {/* Add more cells for additional columns */}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-          
-          </div>
-          <div> <h3>Pending Job Submissions</h3>
-          <table>
-      <thead>
-        <tr>
-          <th>Company</th>
-          <th>Created At</th>
-          <th>Description</th>
-          <th>Job Location Type</th>
-          <th>Location</th>
-          <th>Status</th>
-          <th>Title</th>
-          <th>Type</th>
-        </tr>
-      </thead>
-      <tbody>
-        {pendingJobs.map((job, index) => (
-          <tr key={index}>
-            <td>{job.company}</td>
-            <td>{job.createdAt}</td>
-            <td>{job.description}</td>
-            <td>{job.jobLocationType}</td>
-            <td>{job.location}</td>
-            <td>{job.status}</td>
-            <td>{job.title}</td>
-            <td>{job.type}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-          </div>
+          <pendingAdmins adminData={adminRequestData} />
+         <PendingJobs jobData={PendingJobs} />
           <div> <h3>Job Acceptance History</h3>
 
           </div>
