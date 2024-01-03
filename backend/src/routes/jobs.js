@@ -17,12 +17,7 @@ router.get('/approved', jobsController.getAllJobs);
 
 
 // Route to get a specific job by ID
-router.get('/:jobId', authMiddleware, jobsController.getJobById);
+router.get('/:jobId', jobsController.getJobById);
 
-// Route to update a specific job (typically admin-protected)
-router.put('/:jobId', authMiddleware, jobsController.updateJob);
-
-// Route to delete a specific job (typically admin-protected)
-router.delete('/:jobId', authMiddleware, jobsController.deleteJob);
 
 module.exports = router;

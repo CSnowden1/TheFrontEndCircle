@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOwner } from '../../context/userContext';
 import PendingJobs from '../adminComponents/pendingJobsTable';
-import pendingAdmins from './adminRequestTable';
+import PendingAdmins from './adminRequestTable';
 
 function OwnerLoginForm() {
   const { login } = useOwner();
@@ -57,7 +57,7 @@ function OwnerLoginForm() {
       setPendingJobs(pendingJobData);
       setAdminRequests(adminRequestData);
       console.log(adminRequestData);
-
+      console.log(pendingJobData);
 
       login(responseData);
       setOwnerState(responseData); // Set owner state with the fetched data
@@ -81,8 +81,8 @@ function OwnerLoginForm() {
       {ownerState && (
         <div>
           <h3>Welcome {ownerState.owner.username}!</h3>
-          <pendingAdmins adminData={adminRequestData} />
-         <PendingJobs jobData={PendingJobs} />
+          <PendingAdmins adminData={adminRequests} />
+         <PendingJobs jobData={pendingJobs} />
           <div> <h3>Job Acceptance History</h3>
 
           </div>

@@ -1,4 +1,4 @@
-import react from 'react';
+import React from 'react';
 
 
 export default function pendingAdmins({adminData}) {
@@ -24,7 +24,6 @@ export default function pendingAdmins({adminData}) {
             <td>{user.email}</td>
             <td>{user.password}</td>
             <td>{user.isAdmin ? 'Yes' : 'No'}</td>
-            {/* Add more cells for additional columns */}
           </tr>
         ))}
       </tbody>

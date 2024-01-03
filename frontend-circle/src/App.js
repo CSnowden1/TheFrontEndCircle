@@ -14,6 +14,7 @@ import { UserProvider } from './context/userContext'; // Import UserProvider
 import { useNormalUser } from './context/userContext';
 import AdminLogin from './components/adminComponents/adminLogin'
 import OwnerLogin from './components/ownerComponents/ownerLogin'
+import JobPage from './components/jobBoardComponents/jobPage'
 
 function ProtectedRoute({ children }) {
   const { user } = useNormalUser();
@@ -41,6 +42,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/job-board" element={<ProtectedRoute><JobBoardPage /></ProtectedRoute>} />
+          <Route path="/job-board/jobs/:jobId" element={<ProtectedRoute><JobPage /></ProtectedRoute>} />
           <Route path="/submit-job" element={<ProtectedRoute><JobSubmissionPage /></ProtectedRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard user={user} /></ProtectedRoute>} />
           <Route path="/dashboard/adminregister" element={<ProtectedRoute><AdminRequestPage /></ProtectedRoute>} />

@@ -46,38 +46,37 @@ exports.getPendingJobs = async (req, res) => {
       const jobs = await Job.find({ status: "pending"});
       res.json(jobs);
     } catch (error) {
-      res.status(500).send('Error fetching jobs');
+      res.status(500).send('Error fetching pending jobs', error);
     }
   };
 
 
   exports.getAllJobs = async (req, res) => {
     try {
-      const jobs = await Job.find({ status: "accpeted"});
+      const jobs = await Job.find({ status: "accepted"});
       res.json(jobs);
     } catch (error) {
-      res.status(500).send('Error fetching jobs');
+      res.status(500).send('Error fetching jobs', error);
     }
   };
 
   
-
-
 
 // Controller for retrieving a specific job posting by ID
 exports.getJobById = async (req, res) => {
-    try {
-      const job = await Job.findById(req.params.jobId);
-      if (!job) {
-        return res.status(404).send('Job not found');
-      }
-      res.json(job);
-    } catch (error) {
-      res.status(500).send('Error fetching job');
+  try {
+    console.log(req.params.jobId);
+    const job = await Job.findById(req.params.jobId);
+    if (!job) {
+      return res.status(404).json({ error: 'Job not found' });
     }
-  };
+    res.json(job);
+  } catch (error) {
+    console.error('Error fetching job:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
-  
 
 
 
