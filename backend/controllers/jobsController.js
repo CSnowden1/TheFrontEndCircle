@@ -1,5 +1,6 @@
-const Job = require('../models/jobModel');
+const Job = require('../models/jobModel'); 
 const User = require('../models/userModel');
+const { getPointsForJobType } = require('../utils/utility');
 
 exports.submitJob = async (req, res) => {
   try {
@@ -79,20 +80,41 @@ exports.getJobById = async (req, res) => {
 
 
 exports.jobReview = async (req, res) => {
-
   try {
-    console.log(req.body);
-    const job = await Job.findById(req.params.jobId);
-    console.log(job)
-    if (!job) {
+    const currentJob = await Job.findById(req.params.jobId);
+
+    if (!currentJob) {
       return res.status(404).json({ error: 'Job not found' });
     }
+    console.log(currentJob);
+
+    // Assuming the status value is provided in req.body.status
+    const { reviewType, description, clearance, datePosted, addJob } = req.body;
+    console.log(reviewType, description, clearance, datePosted, addJob)
+    // Update job score based on review
+    const jobScore = getPointsForJobType(reviewType, clearance, datePosted);
+    console.log(addJob);
+    // Update job status based on the provided status value
+    if (addJob === 'Yes') {
+      currentJob.status = 'accepted';
+    } else if (addJob === 'No') {
+      currentJob.status = 'rejected';
+    } else {
+      // Handle the case where the provided status is not 'accepted' or 'rejected'
+      return res.status(400).json({ error: 'Invalid status value' });
+    }
+
+    currentJob.jobScore = jobScore;
+    currentJob.description = description;
+    await currentJob.save();
+
     res.json({ message: 'Job review successfully processed' });
   } catch (error) {
     console.error('Error processing job review:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 
 

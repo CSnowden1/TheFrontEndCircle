@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 const JobFeedback = () => {
   const { jobId } = useParams();
@@ -33,9 +33,8 @@ const JobFeedback = () => {
         throw new Error(`Failed to update job: ${response.statusText}`);
       }
 
-      // Optionally, you can handle the successful response here
-      // For example, display a success message or navigate to another page
       console.log('Job updated successfully');
+      history.push('/dashboard');
     } catch (error) {
       console.error('Error updating job:', error);
       setError('Failed to update job. Please try again.');
