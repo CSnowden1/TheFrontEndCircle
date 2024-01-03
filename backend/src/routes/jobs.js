@@ -18,6 +18,7 @@ router.get('/approved', jobsController.getAllJobs);
 
 // Route to get a specific job by ID
 router.get('/:jobId', jobsController.getJobById);
+router.put('/:jobId', jobsController.jobReview);
 
 
 module.exports = router;

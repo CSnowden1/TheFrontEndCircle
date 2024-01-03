@@ -78,6 +78,22 @@ exports.getJobById = async (req, res) => {
 };
 
 
+exports.jobReview = async (req, res) => {
+
+  try {
+    console.log(req.body);
+    const job = await Job.findById(req.params.jobId);
+    console.log(job)
+    if (!job) {
+      return res.status(404).json({ error: 'Job not found' });
+    }
+    res.json({ message: 'Job review successfully processed' });
+  } catch (error) {
+    console.error('Error processing job review:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 
 
 // Controller for updating a job posting
