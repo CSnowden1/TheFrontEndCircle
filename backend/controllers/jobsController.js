@@ -77,8 +77,6 @@ exports.getJobById = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
-
 exports.jobReview = async (req, res) => {
   try {
     const currentJob = await Job.findById(req.params.jobId);
@@ -86,26 +84,38 @@ exports.jobReview = async (req, res) => {
     if (!currentJob) {
       return res.status(404).json({ error: 'Job not found' });
     }
-    console.log(currentJob);
 
-    // Assuming the status value is provided in req.body.status
     const { reviewType, description, clearance, datePosted, addJob } = req.body;
-    console.log(reviewType, description, clearance, datePosted, addJob)
+
     // Update job score based on review
     const jobScore = getPointsForJobType(reviewType, clearance, datePosted);
-    console.log(addJob);
+
     // Update job status based on the provided status value
     if (addJob === 'Yes') {
       currentJob.status = 'approved';
     } else if (addJob === 'No') {
       currentJob.status = 'rejected';
     } else {
-      // Handle the case where the provided status is not 'accepted' or 'rejected'
+      // Handle the case where the provided status is neither 'Yes' nor 'No'
       return res.status(400).json({ error: 'Invalid status value' });
     }
 
+    const username = currentJob.user;  // Assuming the username is stored in the user field
+    const user = await User.findOne({ username });  // Find the user by their username
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update user points based on the job score
+    user.points += jobScore;
+
+    // Update job score and description
     currentJob.jobScore = jobScore;
     currentJob.description = description;
+
+    // Save changes to both user and job
+    await user.save();
     await currentJob.save();
 
     res.json({ message: 'Job review successfully processed' });
@@ -114,6 +124,7 @@ exports.jobReview = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 
 
