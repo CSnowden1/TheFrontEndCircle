@@ -13,7 +13,7 @@ exports.submitJob = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const newJob = new Job({ ...jobDetails });
+    const newJob = new Job({ ...jobDetails, user: username });
     user.jobSubmissions.push(newJob._id); // Push Job ID to User's jobSubmissions array
     await Promise.all([newJob.save(), user.save()]); // Save both the job and user in parallel
 

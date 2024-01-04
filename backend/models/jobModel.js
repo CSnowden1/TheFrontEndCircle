@@ -32,6 +32,14 @@ const jobSchema = new mongoose.Schema({
     enum: ['pending', 'approved', 'rejected'],
     default: 'pending'
   },
+  user: {
+    type: String,
+    required: true,
+  },
+  admin: {
+    type: String,
+    default: 'pending'
+  },
   createdAt: {
     type: Date,
     default: Date.now
