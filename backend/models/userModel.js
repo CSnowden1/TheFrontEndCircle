@@ -35,6 +35,29 @@ const userSchema = new mongoose.Schema({
   state: { type: String, required: true },
   experience: { type: Number, required: true },
   education: { type: String, required: true, enum: ['degree', 'bootcamp', 'self-taught'] },
+  bio: {type: String },
+  github: {type: String},
+  linkedIn: {type: String},
+  profileTag: {type: String},
+  profilePic:{type: String},
+  opentoCollab: {type: Boolean, default: false },
+  techStack: {
+    type: [String],
+  },
+  openCollabs: [
+    {
+      title: String,
+      team: [
+        {
+          username: String,
+        }
+      ],
+      github: String,
+      description: String,
+      projectId: String,
+      projectManager: String,
+    },
+  ],
   isInUS: { type: String, required: "yes" }
 });
 

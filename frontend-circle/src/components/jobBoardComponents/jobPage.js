@@ -29,7 +29,7 @@ const JobPage = () => {
       
       
       {jobData.status === 'approved' ? (
-        <p>Status: Live Mode</p>
+        <h2>Uploaded by {jobData.user.username}</h2>
       ) : (
         <JobFeedback />
       )}

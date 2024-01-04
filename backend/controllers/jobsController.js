@@ -51,32 +51,62 @@ exports.getPendingJobs = async (req, res) => {
     }
   };
 
-
   exports.getAllJobs = async (req, res) => {
     try {
-      const jobs = await Job.find({ status: "approved"});
-      res.json(jobs);
+      // Fetch all approved jobs
+      const jobs = await Job.find({ status: "approved" });
+  
+      // Extract usernames from the jobs
+      const usernames = jobs.map(job => job.user);
+  
+      // Fetch user data for the extracted usernames
+      const users = await User.find({ username: { $in: usernames } });
+  
+      // Create a map for efficient lookup
+      const userMap = {};
+      users.forEach(user => {
+        userMap[user.username] = user;
+      });
+  
+      // Combine job data with user data
+      const jobsWithUserData = jobs.map(job => ({
+        ...job.toObject(), // Convert Mongoose document to plain JavaScript object
+        user: userMap[job.user], // Replace username with user data
+      }));
+  
+      res.json(jobsWithUserData);
     } catch (error) {
       res.status(500).send('Error fetching jobs', error);
     }
   };
 
   
-
-// Controller for retrieving a specific job posting by ID
-exports.getJobById = async (req, res) => {
-  try {
-    console.log(req.params.jobId);
-    const job = await Job.findById(req.params.jobId);
-    if (!job) {
-      return res.status(404).json({ error: 'Job not found' });
+  exports.getJobById = async (req, res) => {
+    try {
+      const jobId = req.params.jobId;
+  
+      // Fetch the specific job by ID
+      const job = await Job.findById(jobId);
+  
+      if (!job) {
+        return res.status(404).json({ error: 'Job not found' });
+      }
+  
+      // Fetch user data for the username associated with the job
+      const user = await User.findOne({ username: job.user });
+  
+      // Combine job data with user data
+      const jobWithUserData = {
+        ...job.toObject(), // Convert Mongoose document to plain JavaScript object
+        user: user || null, // Replace username with user data or null if not found
+      };
+  
+      res.json(jobWithUserData);
+    } catch (error) {
+      console.error('Error fetching job:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
-    res.json(job);
-  } catch (error) {
-    console.error('Error fetching job:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-};
+  };
 
 
 exports.jobReview = async (req, res) => {

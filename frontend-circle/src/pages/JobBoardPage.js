@@ -59,6 +59,7 @@ const JobBoardPage = () => {
                   <td>{job.status}</td>
                   <td>{job.title}</td>
                   <td>{job.type}</td>
+                  <div>{job.user.username}</div>
                   <td><Link to={`/job-board/jobs/${job._id}`}>View Job</Link></td>
                 </tr>
               ))}
