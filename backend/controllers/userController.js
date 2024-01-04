@@ -115,8 +115,43 @@ exports.activateTicket = async (req, res) => {
     res.status(400).send(error);
   }
 };
+exports.buyTicket = async (req, res) => {
+  try {
+    const { username } = req.body;
 
+    // Retrieve the user based on the provided username
+    const user = await User.findOne({ username });
 
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Check if the user has enough points to purchase a ticket
+    if (user.points < 5) {
+      return res.status(400).json({ error: 'Not enough points to purchase an access ticket' });
+    }
+
+    user.points -= 5;
+
+    const expirationDate = new Date();
+    expirationDate.setMonth(expirationDate.getMonth() + 1);
+
+    const newAccessTicket = {
+      validUntil: expirationDate,
+      isActivated: false,
+    };
+
+    user.accessTickets.push(newAccessTicket);
+
+    // Save the updated user to the database
+    await user.save();
+
+    res.json({ message: 'Access ticket purchased successfully', user });
+  } catch (error) {
+    console.error('Error purchasing access ticket:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
 exports.getUserData = async (req, res) => {
   try {
