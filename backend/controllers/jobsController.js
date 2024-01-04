@@ -54,7 +54,7 @@ exports.getPendingJobs = async (req, res) => {
 
   exports.getAllJobs = async (req, res) => {
     try {
-      const jobs = await Job.find({ status: "accepted"});
+      const jobs = await Job.find({ status: "approved"});
       res.json(jobs);
     } catch (error) {
       res.status(500).send('Error fetching jobs', error);
@@ -96,7 +96,7 @@ exports.jobReview = async (req, res) => {
     console.log(addJob);
     // Update job status based on the provided status value
     if (addJob === 'Yes') {
-      currentJob.status = 'accepted';
+      currentJob.status = 'approved';
     } else if (addJob === 'No') {
       currentJob.status = 'rejected';
     } else {
