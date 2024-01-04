@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 const JobBoardPage = () => {
   const [error, setError] = useState(null);
@@ -57,6 +59,7 @@ const JobBoardPage = () => {
                   <td>{job.status}</td>
                   <td>{job.title}</td>
                   <td>{job.type}</td>
+                  <td><Link to={`/job-board/jobs/${job._id}`}>View Job</Link></td>
                 </tr>
               ))}
             </tbody>

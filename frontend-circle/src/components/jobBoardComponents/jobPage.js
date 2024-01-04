@@ -28,7 +28,7 @@ const JobPage = () => {
       <p>Description: {jobData.description}</p>
       
       
-      {jobData.status === 'accepted' ? (
+      {jobData.status === 'approved' ? (
         <p>Status: Live Mode</p>
       ) : (
         <JobFeedback />

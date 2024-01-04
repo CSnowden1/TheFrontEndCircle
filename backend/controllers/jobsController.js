@@ -77,6 +77,8 @@ exports.getJobById = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+
 exports.jobReview = async (req, res) => {
   try {
     const currentJob = await Job.findById(req.params.jobId);
