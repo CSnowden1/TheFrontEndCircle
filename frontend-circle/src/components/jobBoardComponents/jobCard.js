@@ -1,17 +1,48 @@
 import React from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-function JobBoardCard({ job }) {
+const CardContainer = styled.div`
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+`;
+
+const JobTitle = styled.h3`
+  margin-bottom: 10px;
+`;
+
+const JobDetails = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+`;
+
+const ViewJobLink = styled(Link)`
+  color: #3498db;
+  text-decoration: none;
+  font-weight: bold;
+`;
+
+const JobCard = ({ job }) => {
   return (
-    <div className="job-board-card">
-      <h3>{job.title}</h3>
-      <p><strong>Company:</strong> {job.company}</p>
-      <p><strong>Type:</strong> {job.type}</p>
-      <p><strong>Location:</strong> {job.jobLocationType}</p>
-      <p><strong>Date Posted:</strong> {new Date(job.createdAt).toLocaleDateString()}</p>
-      <p><strong>Key Skills:</strong> {job.keySkills.join(', ')}</p>
-      <a href={job.link} target="_blank" rel="noopener noreferrer">Apply Here</a>
-    </div>
+    <CardContainer>
+      <JobTitle>{job.title}</JobTitle>
+      <JobDetails>
+        <div>
+          <strong>Company:</strong> {job.company}
+        </div>
+        <div>
+          <strong>Location:</strong> {job.location}
+        </div>
+        <div>
+          <strong>Type:</strong> {job.type}
+        </div>
+      </JobDetails>
+      <ViewJobLink to={`/job-board/jobs/${job._id}`}>View Job</ViewJobLink>
+    </CardContainer>
   );
-}
+};
 
-export default JobBoardCard;
+export default JobCard;

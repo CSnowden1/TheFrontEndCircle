@@ -1,13 +1,99 @@
-body {
+/* Reset some default browser styles */
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Set a dark background color for the entire site */
+body {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif; /* Replace with a professional font */
+  line-height: 1.6;
 }
+
+/* Apply a container to center content on the page */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Define a common heading style */
+h1, h2, h3, h4, h5 {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* Style links */
+a {
+  color: #4ea1d3;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #318bbd;
+}
+
+/* Apply a gradient background to create texture */
+.gradient-background {
+  background: linear-gradient(45deg, #1a1a1a, #333333);
+}
+
+/* Apply a dark background with different shades to cards or sections */
+.card {
+  background-color: #252525; /* Darker shade */
+  color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+}
+
+/* Style buttons with different shades */
+.button {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #4a4a4a; /* Darker shade */
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.button:hover {
+  background-color: #333333; /* Darker shade on hover */
+}
+
+/* Apply styles for form elements with different shades */
+form {
+  max-width: 600px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #555555;
+  border-radius: 5px;
+  background-color: #3a3a3a; /* Darker shade */
+  color: #ffffff;
+}
+
+/* Customize other specific elements based on your needs */

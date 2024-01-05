@@ -1,10 +1,49 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const HeaderContainer = styled.header`
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+`;
+
+const SmallMenu = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const MenuItem = styled.li`
+  margin-right: 20px;
+`;
+
+const MenuLink = styled.a`
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #ffcc00; /* Change to your desired hover color */
+  }
+`;
+
+const SiteTitle = styled.h1`
+  margin: 10px 0;
+  font-size: 24px;
+`;
 
 function Header() {
   return (
-    <header>
-      <h1>Job Posting Website</h1>
-    </header>
+    <HeaderContainer>
+      <SmallMenu>
+          <MenuItem><MenuLink href="#">Blogs</MenuLink></MenuItem>
+          <MenuItem><MenuLink href="#">Career Advice</MenuLink></MenuItem>
+          <MenuItem><MenuLink href="#">Career Resources</MenuLink></MenuItem>
+          <MenuItem><MenuLink href="#">About Us</MenuLink></MenuItem>
+      </SmallMenu>
+    </HeaderContainer>
   );
 }
 

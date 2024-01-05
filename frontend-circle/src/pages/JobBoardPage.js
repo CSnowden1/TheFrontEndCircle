@@ -1,6 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import JobCard from '../components/jobBoardComponents/jobCard'; // Import the JobCard component
 
+const JobBoardContainer = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+`;
+
+const Heading = styled.h2`
+  color: #333;
+`;
+
+const ErrorMessage = styled.p`
+  color: #ff0000;
+`;
+
+const JobList = styled.div`
+  margin-top: 20px;
+`;
 
 const JobBoardPage = () => {
   const [error, setError] = useState(null);
@@ -17,8 +36,6 @@ const JobBoardPage = () => {
         });
 
         const jobData = await getJobs.json();
-        console.log(jobData);
-
         setJobs(jobData);
       } catch (error) {
         console.error("Error fetching Jobs: ", error);
@@ -26,48 +43,17 @@ const JobBoardPage = () => {
       }
     };
 
-    fetchJobs(); // Call the function when the component mounts
-  }, []); // Empty dependency array means this effect runs once when the component mounts
+    fetchJobs();
+  }, []);
 
   return (
-    <div>
-      <h2>Job Board</h2>
-      <div>
-        {error && <p>{error}</p>}
-        {jobs && (
-          <table>
-            <thead>
-              <tr>
-                <th>Company</th>
-                <th>Created At</th>
-                <th>Description</th>
-                <th>Job Location Type</th>
-                <th>Location</th>
-                <th>Status</th>
-                <th>Title</th>
-                <th>Type</th>
-              </tr>
-            </thead>
-            <tbody>
-              {jobs.map((job, index) => (
-                <tr key={index}>
-                  <td>{job.company}</td>
-                  <td>{job.createdAt}</td>
-                  <td>{job.description}</td>
-                  <td>{job.jobLocationType}</td>
-                  <td>{job.location}</td>
-                  <td>{job.status}</td>
-                  <td>{job.title}</td>
-                  <td>{job.type}</td>
-                  <div>{job.user.username}</div>
-                  <td><Link to={`/job-board/jobs/${job._id}`}>View Job</Link></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
-    </div>
+    <JobBoardContainer>
+      <Heading>Job Board</Heading>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+      <JobList>
+        {jobs && jobs.map((job) => <JobCard key={job._id} job={job} />)}
+      </JobList>
+    </JobBoardContainer>
   );
 };
 
