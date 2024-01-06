@@ -1,33 +1,49 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
-const CardContainer = styled.div`
+const PreviewContainer = styled.div`
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px;
-  margin-bottom: 15px;
+  height: 100vh;
 `;
 
 const JobTitle = styled.h3`
-  margin-bottom: 10px;
+  color: #333;
 `;
 
 const JobDetails = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
+  margin-top: 10px;
+
+  div {
+    margin-bottom: 8px;
+  }
+
+  strong {
+    margin-right: 8px;
+  }
 `;
 
-const ViewJobLink = styled(Link)`
-  color: #3498db;
+const ViewJobLink = styled.a`
+  display: block;
+  margin-top: 10px;
   text-decoration: none;
+  color: #0366d6;
   font-weight: bold;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
-const JobCard = ({ job, onClick }) => {
+const JobPreview = ({ job }) => {
+    if (!job) {
+        return <PreviewContainer>No job selected</PreviewContainer>;
+      }
+
   return (
-    <CardContainer onClick={() => onClick(job)}>
+    
+    <PreviewContainer>
       <JobTitle>{job.title}</JobTitle>
       <JobDetails>
         <div>
@@ -39,10 +55,13 @@ const JobCard = ({ job, onClick }) => {
         <div>
           <strong>Type:</strong> {job.type}
         </div>
+        <div>
+          <strong>Description:</strong> {job.description}
+        </div>
       </JobDetails>
       <ViewJobLink to={`/job-board/jobs/${job._id}`}>View Job</ViewJobLink>
-    </CardContainer>
+    </PreviewContainer>
   );
 };
 
-export default JobCard;
+export default JobPreview;
