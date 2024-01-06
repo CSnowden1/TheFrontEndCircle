@@ -1,16 +1,65 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { auth } from '../firebase-config';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
-
-
 const states = ["Alabama", "Alaska", "Maryland" /* ... all other states ... */];
 
+const RegisterFormContainer = styled.div`
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
 
+const ErrorMessage = styled.p`
+  color: #ff0000;
+  margin-bottom: 10px;
+`;
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+
+  input,
+  select {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+  label {
+    margin-right: 10px;
+  }
+
+  p {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  button {
+    padding: 12px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #45a049;
+    }
+  }
+`;
 
 function RegisterForm() {
   const [formData, setFormData] = useState({
-    username:'', email: '', confirmEmail: '', password: '', confirmPassword: '',
+    username: '', email: '', confirmEmail: '', password: '', confirmPassword: '',
     firstName: '', lastName: '', city: '', state: '',
     experience: '', education: ''
   });
@@ -18,7 +67,6 @@ function RegisterForm() {
   const [isInUS, setIsInUS] = useState('');
   const [error, setError] = useState('');
 
-  
   const handleUSChange = (event) => {
     setIsInUS(event.target.value);
   };
@@ -34,70 +82,70 @@ function RegisterForm() {
     setError('');
 
     if (email !== confirmEmail) {
-        return setError("Emails do not match!");
-      }
-    
-      if (password !== confirmPassword) {
-        return setError("Passwords do not match!");
-      }
-    
-      if (parseInt(experience) > 2) {
-        return setError("Only users with less than 2 years of experience are allowed.");
-      }
-    
-      if (education === "degree") {
-        return setError("Registration is only for self-taught developers or bootcamp graduates.");
-      }
-       
-      if (isInUS !== 'yes') {
-        return setError("Registration is only allowed for users in the United States.");
+      return setError("Emails do not match!");
+    }
+
+    if (password !== confirmPassword) {
+      return setError("Passwords do not match!");
+    }
+
+    if (parseInt(experience) > 2) {
+      return setError("Only users with less than 2 years of experience are allowed.");
+    }
+
+    if (education === "degree") {
+      return setError("Registration is only for self-taught developers or bootcamp graduates.");
+    }
+
+    if (isInUS !== 'yes') {
+      return setError("Registration is only allowed for users in the United States.");
+    }
+
+    try {
+      // Register with Firebase
+      console.log('Registration Data:', {
+        username,
+        email,
+        password,
+        firstName,
+        lastName,
+        city,
+        state,
+        experience,
+        education,
+        isInUS: isInUS === 'yes',
+      });
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      console.log("Firebase Auth registration successful");
+
+      // Then, send additional data to your server
+      const response = await fetch('http://localhost:5000/api/users/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', },
+        body: JSON.stringify({
+          uid: userCredential.user.uid, // Include Firebase UID
+          firstName, lastName, city, state, username, password, email,
+          experience, education, isInUS: isInUS === 'yes'
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Error during registration');
       }
 
+      console.log("Server-side registration successful!");
+      // Redirect to login page or dashboard after registration
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
-      try {
-        // Register with Firebase
-        console.log('Registration Data:', {
-          username,
-          email,
-          password,
-          firstName,
-          lastName,
-          city,
-          state,
-          experience,
-          education,
-          isInUS: isInUS === 'yes',
-        });
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        console.log("Firebase Auth registration successful");
-    
-        // Then, send additional data to your server
-        const response = await fetch('http://localhost:5000/api/users/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', },
-          body: JSON.stringify({ 
-            uid: userCredential.user.uid, // Include Firebase UID
-            firstName, lastName, city, state, username, password, email,
-            experience, education, isInUS: isInUS === 'yes' 
-          }),
-        });
-    
-        const data = await response.json();
-    
-        if (!response.ok) {
-          throw new Error(data.message || 'Error during registration');
-        }
-    
-        console.log("Server-side registration successful!");
-        // Redirect to login page or dashboard after registration
-      } catch (error) {
-        setError(error.message);
-      }
-    };
   return (
-    <div>
-        {error && <p className="error-message">{error}</p>}
-      <form onSubmit={register}>
+    <RegisterFormContainer>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+      <StyledForm onSubmit={register}>
         <input type='username' name='username' value={username} onChange={handleChange} placeholder='Username' />
         <input type="email" name="email" value={email} onChange={handleChange} placeholder="Email" />
         <input type="email" name="confirmEmail" value={confirmEmail} onChange={handleChange} placeholder="Confirm Email" />
@@ -121,11 +169,11 @@ function RegisterForm() {
             type="radio"
             name="isInUS"
             value="no"
-            checked={isInUS === 'no'}  
+            checked={isInUS === 'no'}
             onChange={handleUSChange}
           />
           No
-        </label> 
+        </label>
         <select name="state" value={formData.state} onChange={handleChange}>
           <option value="">Select State</option>
           {states.map((state) => (
@@ -141,8 +189,8 @@ function RegisterForm() {
           <option value="self-taught">Self-Taught</option>
         </select>
         <button type="submit">Register</button>
-      </form>
-    </div>
+      </StyledForm>
+    </RegisterFormContainer>
   );
 }
 

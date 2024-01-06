@@ -43,7 +43,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/job-board" element={<ProtectedRoute><JobBoardPage /></ProtectedRoute>} />
           <Route path="/job-board/jobs/:jobId" element={<ProtectedRoute><JobPage /></ProtectedRoute>} />
-          <Route path="/submit-job" element={<ProtectedRoute><JobSubmissionPage /></ProtectedRoute>} />
+          <Route path="/submit-job" element={<ProtectedRoute><JobSubmissionPage user={user} /></ProtectedRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard user={user} /></ProtectedRoute>} />
           <Route path="/dashboard/adminregister" element={<ProtectedRoute><AdminRequestPage /></ProtectedRoute>} />
           <Route path='/login' element={<LoginForm />} />
