@@ -2,16 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+
 const StyledNav = styled.nav`
-  background-color: #1a1a1a;
-  padding: 20px;
+  background-color: #FFFEFE;
+  padding: .5rem 17rem;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: solid #A4BDC6 .25px;
+  color: #545854;
 
   a {
-    color: #ffffff;
+    color: #545854;
     text-decoration: none;
-    font-weight: bold;
     transition: color 0.3s ease;
 
     &:hover {
@@ -20,14 +23,22 @@ const StyledNav = styled.nav`
   }
 `;
 
+
+const NavLogo = styled.img`
+
+  height: 2rem;
+
+`
 function Navigation() {
   return (
     <StyledNav>
-      <Link to="/">Home</Link>
+      <Link to="/">
+        <NavLogo  src="/navLogo.svg" alt="Navigation Logo"></NavLogo>
+      </Link>
       <Link to="/submit-job">Submit Job</Link>
       <Link to="/job-board">Job Board</Link>
       <Link to="/dashboard">Dashboard</Link>
-      <Link to="/login">Login/SignUp</Link>
+      <Link to="/login">Sign in</Link>
     </StyledNav>
   );
 }

@@ -4,17 +4,17 @@ import styled from 'styled-components';
 const HeaderContainer = styled.header`
   background-color: #333;
   color: #fff;
-  padding: 10px;
+  padding: .5rem 17rem;
   text-align: center;
 `;
 
 const SmallMenu = styled.div`
   display: flex;
-  justify-content: center;
 `;
 
-const MenuItem = styled.li`
+const MenuItem = styled.div`
   margin-right: 20px;
+
 `;
 
 const MenuLink = styled.a`
