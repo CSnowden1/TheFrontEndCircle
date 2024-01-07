@@ -6,6 +6,10 @@ const PreviewContainer = styled.div`
   border-radius: 8px;
   padding: 15px;
   height: 100vh;
+  width: 80%;
+  background-color: #FFFEFE;
+  position: sticky;
+  top: 0px;
 `;
 
 const JobTitle = styled.h3`

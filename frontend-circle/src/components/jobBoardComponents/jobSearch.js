@@ -10,6 +10,9 @@ const SearchContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #FFFEFE;
+  position: sticky;
+  top: 5px;
 `;
 
 const SearchInput = styled.input`
@@ -18,6 +21,16 @@ const SearchInput = styled.input`
   font-size: 1rem;
   border: 1px solid #ddd;
   border-radius: 5px;
+  color: #333;
+
+  input {
+    background-color: #F0F0F0;
+    margin: 0;
+    padding: 0;
+  }
+
+
+  
 `;
 
 const SearchButton = styled.button`

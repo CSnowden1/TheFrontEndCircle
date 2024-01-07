@@ -7,22 +7,26 @@ const FilterContainer = styled.div`
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
-`;
-
-const FilterHeading = styled.h2`
-  color: #333;
-  font-size: 1.5rem;
-  margin-bottom: 10px;
+  background-color: #FFFEFE;
+  display: flex;
+  color: black;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 5rem;
 `;
 
 const FilterLabel = styled.label`
   display: block;
   margin-bottom: 8px;
   font-size: 1rem;
+  color: black;
+
 `;
 
 const FilterCheckbox = styled.input`
   margin-right: 8px;
+  color: black;
 `;
 
 const JobFilter = ({ onFilter }) => {
@@ -48,7 +52,6 @@ const JobFilter = ({ onFilter }) => {
 
   return (
     <FilterContainer>
-      <FilterHeading>Job Filters</FilterHeading>
       <FilterLabel>
         <FilterCheckbox
           type="checkbox"

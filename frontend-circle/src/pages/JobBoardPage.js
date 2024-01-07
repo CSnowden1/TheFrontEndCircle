@@ -7,9 +7,8 @@ import JobFilters from '../components/jobBoardComponents/jobFilters'
 import JobPreview from '../components/jobBoardComponents/jobPreview'
 
 const JobBoardContainer = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+  width: 100%;
+  padding: 5rem 18rem;
 `;
 
 const JobBox = styled.div`
@@ -26,7 +25,7 @@ const ErrorMessage = styled.p`
 `;
 
 const JobList = styled.div`
-  margin-top: 20px;
+  margin-right: 15px;
 `;
 
 

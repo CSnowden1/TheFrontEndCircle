@@ -124,18 +124,20 @@ const StatStack = styled(Link)`
 
   h3 {
     font-size: 3rem;
+    color: black;
   }
 
   p {
     font-size: 1rem
+        color: black;
   }
 
 
   button {
     padding: 10px;
     background-color: transparent;
-    color: #e74c3c;
-    border: solid #e74c3c .5px;
+    color: #A56B91;
+    border: solid #A56B91 .5px;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
@@ -148,7 +150,7 @@ const StatStack = styled(Link)`
     }
 
     a {
-      color: #e74c3c;
+      color: #A56B91;
     }
 `;
 

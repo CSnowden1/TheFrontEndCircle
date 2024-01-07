@@ -82,18 +82,4 @@ label {
   color: #ffffff;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
-select,
-textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 20px;
-  border: 1px solid #555555;
-  border-radius: 5px;
-  background-color: #3a3a3a; /* Darker shade */
-  color: #ffffff;
-}
-
 /* Customize other specific elements based on your needs */

@@ -7,6 +7,9 @@ const CardContainer = styled.div`
   border-radius: 8px;
   padding: 15px;
   margin-bottom: 15px;
+  background-color: #FFFEFE;
+  height: 11rem;
+
 `;
 
 const JobTitle = styled.h3`
