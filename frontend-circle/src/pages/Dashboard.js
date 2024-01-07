@@ -98,6 +98,16 @@ const AccessTicketSection = styled.div`
   }
 `;
 
+
+const AccountLogin = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 5rem 18rem;
+
+`;
+
+
 const LearnMoreLink = styled(Link)`
   font-size: 18px;
   color: #3498db;
@@ -119,6 +129,27 @@ const StatStack = styled(Link)`
   p {
     font-size: 1rem
   }
+
+
+  button {
+    padding: 10px;
+    background-color: transparent;
+    color: #e74c3c;
+    border: solid #e74c3c .5px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #c0392b;
+      color: white;
+    }
+
+    a {
+      color: #e74c3c;
+    }
 `;
 
 const CircularImage = styled.img`
@@ -182,31 +213,26 @@ const Dashboard = () => {
         <StatStack>
           <h3>{user.user.jobSubmissions.length}</h3>
           <p>Job Submissions</p>
+          <button><Link to="/submit-job">Submit Job</Link></button>
         </StatStack>
         <StatStack>
           <h3>{user.user.points}</h3>
           <p>Points</p>
+          <button onClick={handlePurchase}>Purchase Ticket</button>
+          {purchaseError && <p>{purchaseError}</p>}
         </StatStack>
         <StatStack>
           <h3>{user.user.accessTickets.length} </h3>
           <p>Access Tickets</p>  
+          <button>Redeem Ticket</button>
         </StatStack>
       </InfoSection>
-      <div>
-        <h3>X amount of jobs have been added in the last week. There are currently x amount of high-value jobs on the boards. X amount of Mid-value jobs and x and amount of low-value jobs jobs</h3>
-      </div>
-      <AccessTicketSection>
-        <h3>Redeem An Access Ticket For 24 hours <button>Click Me</button></h3>
-        <h3>
-          Purchase an Access Ticket for 5 points{' '}
-          <button onClick={handlePurchase}>Purchase</button>
-        </h3>
-        {purchaseError && <p>{purchaseError}</p>}
-      </AccessTicketSection>
+      <AccountLogin>
+        { user.user.isAdmin? <AdminLoginForm /> : <LearnMoreLink to="/dashboard/adminregister">Become An Admin</LearnMoreLink>   }
+        { user.user.isOwner? <OwnerLoginForm />  : null  }
+      </AccountLogin>
       <QuickJobSubmit user={user} />
-      { user.user.isAdmin? <AdminLoginForm /> : <LearnMoreLink to="/dashboard/adminregister">Become An Admin</LearnMoreLink>   }
-      { user.user.isOwner? <div><h2> Welcome to your Owner Account </h2> <OwnerLoginForm /> </div> : <h2>Learn More</h2> }
-    </DashboardContainer>
+  </DashboardContainer>
   );
 };
 

@@ -1,4 +1,59 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
+
+const FormContainer = styled.div`
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #FFFEFE;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+`;
+
+const Heading = styled.h2`
+  color: #333;
+  text-align: center;
+`;
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+
+  input,
+  textarea,
+  select {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #FFF;
+  }
+
+  select {
+    width: 100%;
+  }
+
+  button {
+    padding: 12px;
+    background-color: #A56B91;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #45a049;
+    }
+
+    &:disabled {
+      background-color: #ddd;
+      cursor: not-allowed;
+    }
+  }
+`;
 
 export default function QuickJobSubmit({ user }) {
   const [formData, setFormData] = useState({
@@ -9,23 +64,22 @@ export default function QuickJobSubmit({ user }) {
     type: '',
     jobLocationType: '',
     link: '',
-    'user':`${user.user.username}`
+    user: `${user.user.username}`,
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value, 'user':`${user.user.username}` });
+    setFormData({ ...formData, [e.target.name]: e.target.value, user: `${user.user.username}` });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Assuming 'onJobSubmit' is a function passed down to handle the submission
-        console.log(formData);
+      console.log(formData);
       // API call to submit job data
       const response = await fetch('http://localhost:5000/api/jobs/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json',},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
@@ -53,9 +107,9 @@ export default function QuickJobSubmit({ user }) {
   };
 
   return (
-    <div>
-      <h2>Submit a New Job</h2>
-      <form onSubmit={handleSubmit}>
+    <FormContainer>
+      <Heading>Submit a New Job</Heading>
+      <StyledForm onSubmit={handleSubmit}>
         <input
           name="title"
           value={formData.title}
@@ -105,7 +159,7 @@ export default function QuickJobSubmit({ user }) {
           <option value="remote">Remote</option>
         </select>
         <button type="submit">Submit Job</button>
-      </form>
-    </div>
+      </StyledForm>
+    </FormContainer>
   );
 }
