@@ -8,22 +8,48 @@ import AdminLoginForm from '../components/adminComponents/adminLogin';
 import OwnerLoginForm from '../components/ownerComponents/ownerLogin';
 
 const DashboardContainer = styled.div`
-  max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 5rem 18rem
+  color: black;
 `;
 
 const Heading = styled.h1`
   font-size: 24px;
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+
+`;
+const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  color: black;
+  font-size: 1rem;
+
+  h4 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: black;
+  }
+
 `;
 
 const InfoSection = styled.div`
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  padding: 2rem;
+  border-radius: 1rem;
+  margin: 5rem 18rem;
+  border: solid #545854  .25px;
+  align-items:center;
+  justify-content: space-between;
+  background-color: #FFFEFE;
+  
 
   h3 {
     font-size: 18px;
     margin-bottom: 10px;
+    color: black;
   }
 
   button {
@@ -79,6 +105,32 @@ const LearnMoreLink = styled(Link)`
   font-weight: bold;
 `;
 
+const StatStack = styled(Link)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+
+  h3 {
+    font-size: 3rem;
+  }
+
+  p {
+    font-size: 1rem
+  }
+`;
+
+const CircularImage = styled.img`
+  border-radius: 50%;
+  max-width: 100px; 
+  height: auto; 
+  display: block;
+  margin: 0 auto;
+  margin-right: .5rem;
+`;
+
+
 const Dashboard = () => {
   const { user, updateUser } = useNormalUser();
   const [purchaseError, setPurchaseError] = useState('');
@@ -115,13 +167,34 @@ const Dashboard = () => {
 
   return (
     <DashboardContainer>
-      <Heading>Welcome to your Dashboard, {user.user.username}!</Heading>
       <InfoSection>
-        <h3>X amount of jobs have been added in the last week. There are currently x amount of high-value jobs on the boards. X amount of Mid-value jobs and x and amount of low-value jobs jobs</h3>
-        <h3>You have submitted {user.user.jobSubmissions.length} jobs</h3>
-        <h3>You currently have {user.user.points} points</h3>
-        <h3>You currently have {user.user.accessTickets.length} Access Tickets Available</h3>
+      <Heading>
+        <CircularImage
+          src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd2qp0siotla746.cloudfront.net%2Fimg%2Fuse-cases%2Fprofile-picture%2Ftemplate_0.jpg&f=1&nofb=1&ipt=07b50593471f3bff21914bba6e815d549d233884e367d533108f8641061a1eb3&ipo=images"
+          alt="Profile"
+        />
+          <UserInfo>
+            Chris Snowden | {user.user.username}
+            <h4>Frontend Developer</h4>
+            <h4>54 Followers</h4>
+          </UserInfo>
+      </Heading>
+        <StatStack>
+          <h3>{user.user.jobSubmissions.length}</h3>
+          <p>Job Submissions</p>
+        </StatStack>
+        <StatStack>
+          <h3>{user.user.points}</h3>
+          <p>Points</p>
+        </StatStack>
+        <StatStack>
+          <h3>{user.user.accessTickets.length} </h3>
+          <p>Access Tickets</p>  
+        </StatStack>
       </InfoSection>
+      <div>
+        <h3>X amount of jobs have been added in the last week. There are currently x amount of high-value jobs on the boards. X amount of Mid-value jobs and x and amount of low-value jobs jobs</h3>
+      </div>
       <AccessTicketSection>
         <h3>Redeem An Access Ticket For 24 hours <button>Click Me</button></h3>
         <h3>

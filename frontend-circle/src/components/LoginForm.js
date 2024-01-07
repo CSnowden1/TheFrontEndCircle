@@ -39,6 +39,7 @@ const StyledForm = styled.form`
     font-size: 16px;
     background-color: #FFFEFE;
     border: solid black 1px;
+    color: black;
   }
 
   button {

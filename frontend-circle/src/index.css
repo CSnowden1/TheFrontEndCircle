@@ -7,8 +7,8 @@
 
 /* Set a dark background color for the entire site */
 body {
-  background-color: #1a1a1a;
-  color: #ffffff;
+  background-color: #f0f0f0;
+  color: black;
   font-family: 'Roboto', sans-serif; /* Replace with a professional font */
   line-height: 1.6;
 }
