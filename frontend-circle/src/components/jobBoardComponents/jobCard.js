@@ -3,21 +3,31 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const CardContainer = styled.div`
+  display: flex;
+  align-items: baseline;
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 15px;
+  padding: 1rem;
   margin-bottom: 15px;
   background-color: #FFFEFE;
   height: 11rem;
+  width: 20rem;
+
+
+  &:hover {
+    cursor: pointer;
+  }
 
 `;
 
 const JobTitle = styled.h3`
   margin-bottom: 10px;
+  color: black;
 `;
 
 const JobDetails = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   font-size: 14px;
 `;
@@ -30,9 +40,9 @@ const ViewJobLink = styled(Link)`
 
 const JobCard = ({ job, onClick }) => {
   return (
-    <CardContainer onClick={() => onClick(job)}>
-      <JobTitle>{job.title}</JobTitle>
+    <CardContainer to={`/job-board/jobs/${job._id}`}>
       <JobDetails>
+      <JobTitle>{job.title}</JobTitle>
         <div>
           <strong>Company:</strong> {job.company}
         </div>
@@ -43,8 +53,7 @@ const JobCard = ({ job, onClick }) => {
           <strong>Type:</strong> {job.type}
         </div>
       </JobDetails>
-      <ViewJobLink to={`/job-board/jobs/${job._id}`}>View Job</ViewJobLink>
-    </CardContainer>
+    </CardContainer >
   );
 };
 

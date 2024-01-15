@@ -6,7 +6,7 @@ const PreviewContainer = styled.div`
   border-radius: 8px;
   padding: 15px;
   height: 100vh;
-  width: 80%;
+  width: 60%;
   background-color: #FFFEFE;
   position: sticky;
   top: 0px;
@@ -26,14 +26,25 @@ const JobDetails = styled.div`
   strong {
     margin-right: 8px;
   }
+
+
+  h3 {
+    color: #A56B91;
+  }
 `;
 
 const ViewJobLink = styled.a`
-  display: block;
-  margin-top: 10px;
-  text-decoration: none;
-  color: #0366d6;
-  font-weight: bold;
+  
+  padding: 12px;
+  background-color: #A56B91;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+
+
 
   &:hover {
     text-decoration: underline;
@@ -51,7 +62,10 @@ const JobPreview = ({ job }) => {
       <JobTitle>{job.title}</JobTitle>
       <JobDetails>
         <div>
-          <strong>Company:</strong> {job.company}
+          <h3>{job.company.charAt(0).toUpperCase() + job.company.slice(1)}</h3>
+        </div>
+        <div>
+          <ViewJobLink to={`/job-board/jobs/${job._id}`}>Apply Here</ViewJobLink>
         </div>
         <div>
           <strong>Location:</strong> {job.location}
@@ -63,7 +77,7 @@ const JobPreview = ({ job }) => {
           <strong>Description:</strong> {job.description}
         </div>
       </JobDetails>
-      <ViewJobLink to={`/job-board/jobs/${job._id}`}>View Job</ViewJobLink>
+     
     </PreviewContainer>
   );
 };
