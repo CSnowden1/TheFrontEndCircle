@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 const PreviewContainer = styled.div`
   border: 1px solid #ddd;
@@ -33,7 +35,7 @@ const JobDetails = styled.div`
   }
 `;
 
-const ViewJobLink = styled.a`
+const ViewJobLink = styled(Link)`
   
   padding: 12px;
   background-color: #A56B91;
@@ -72,7 +74,7 @@ const JobPreview = ({ job }) => {
             <strong>Type:</strong> {job.type}
           </div>
           <div>
-            <ViewJobLink to={`/job-board/jobs/${job._id}`}>Apply Here</ViewJobLink>
+          <ViewJobLink to={`/jobs/${job._id}`}>Apply Here</ViewJobLink>
             <div>Save Job</div>
           </div>  
         </div>

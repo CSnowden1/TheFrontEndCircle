@@ -18,6 +18,13 @@ const LoginFormContainer = styled.div`
   align-items: center;
   background-color: #FFFEFE;
   color: #545854;
+
+  @media screen and (max-width: 1000px) {
+    padding: 2rem;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
 `;
 
 const ErrorMessage = styled.p`

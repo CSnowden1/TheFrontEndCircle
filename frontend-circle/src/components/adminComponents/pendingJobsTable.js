@@ -47,7 +47,7 @@ const PendingJobs = ({jobData}) => {
                 <button onClick={() => handleJobSelect(job)}>Review</button>
               </td>
               <td>
-              <Link to={`/job-board/jobs/${job._id}`}>Review Website here</Link>
+              <Link to={`/jobs/${job._id}`}>Review Website here</Link>
               </td>
             </tr>
           ))}
