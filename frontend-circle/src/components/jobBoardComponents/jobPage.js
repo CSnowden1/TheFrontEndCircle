@@ -3,9 +3,11 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import JobFeedback from './jobFeedback';
 import UserInfo from './userInfo';
+import Tag from '../resuableComponents/tag'
 
 const JobInfo = styled.div`
   display: flex;
+  flex: 3;
   justify-content: space-between;
   padding: 20px;
   margin-right: .25rem;
@@ -36,21 +38,46 @@ const JobDetails = styled.div`
   flex-direction: column;
   background-color: white;
   border-radius: 1rem;
-  height: 70vh;
   padding: 1rem 2rem;
-  flex-basis: 3;
+  width: 100%;
 
 
 `;
+
+const Company = styled.h2`
+  color: purple;
+  font-size: 3rem;
+`;
+
 
 const Title = styled.h2`
   margin-bottom: 10px;
-  color: purple;
+  font-size: 1.5rem;
+  color: black;
 `;
 
-const Description = styled.p`
-  margin-bottom: 10px;
+const Heading = styled.h2`
+  margin-top: 1rem;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  color: black;
 `;
+
+const ActionBox = styled.div `
+    display: flex;
+  align-items: center;
+`
+
+const Description = styled.div`
+  margin-top: 10px;
+`;
+
+const BasicInfo = styled.div `
+border-bottom: solid purple 1px;
+display: flex;
+flex-direction: column;
+padding-bottom: 1rem;
+`
 
 const JobPage = () => {
   const { jobId } = useParams();
@@ -74,9 +101,10 @@ const JobPage = () => {
       <Container>
         <JobInfo>
           <JobDetails>
-            <div>
+            <BasicInfo>
               <div>
-                <Title>{jobData.company.charAt(0).toUpperCase() + jobData.company.slice(1)}</Title>
+                <Company>{jobData.company.charAt(0).toUpperCase() + jobData.company.slice(1)}</Company>
+                <Title>{jobData.title}</Title>
               </div>
               <div>
                 {jobData.location}
@@ -84,20 +112,22 @@ const JobPage = () => {
               <div>
                   {jobData.type}
               </div>
-              <div>
+              <ActionBox>
                 <div>Apply on Company Site</div>
                 <div>Save Job</div>
-              </div>  
-            </div>
-          <div>
+              </ActionBox>  
+            </BasicInfo>
+          <BasicInfo>
+            <Heading>Job Details</Heading>            
             <div>
-            <strong>Skills:</strong> {jobData.description}
+             <Tag />
             </div>
-            <div>
-              <strong>Description:</strong> {jobData.description}
-            </div>  
-          </div>
+            <Description>
+              {jobData.description}
+            </Description>  
+          </BasicInfo>
           <div>
+          <Heading>Application Tools</Heading>  
             <div>
               <strong>Company's LinkedIn:</strong> {jobData.description}
             </div>
@@ -105,7 +135,10 @@ const JobPage = () => {
               <strong>Company's Glassdoor Review:</strong> {jobData.description}
             </div>
             <div>
-              <strong>Keywords:</strong> {jobData.description}
+              <strong>Company's Website:</strong> {jobData.description}
+            </div>
+            <div>
+              <strong>Application Keywords:</strong> {jobData.description}
             </div>
             <div>
               <strong>Cover Letter Snippets:</strong> {jobData.description}

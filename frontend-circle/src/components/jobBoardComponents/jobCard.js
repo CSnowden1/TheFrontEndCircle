@@ -11,7 +11,7 @@ const CardContainer = styled.div`
   padding: 1rem;
   margin-bottom: 15px;
   background-color: #FFFEFE;
-  height: 11rem;
+  height: auto;
   width: 20rem;
 
 

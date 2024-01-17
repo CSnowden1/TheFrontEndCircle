@@ -8,11 +8,11 @@ import JobPreview from '../components/jobBoardComponents/jobPreview'
 
 const JobBoardContainer = styled.div`
   width: 100%;
-  padding: 5rem 18rem;
+  padding: .5rem 18rem;
 
 
   @media screen and (max-width: 1000px) {
-    padding: 2rem;
+    padding: 1rem;
 }
 
 `;

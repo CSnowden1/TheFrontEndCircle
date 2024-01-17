@@ -10,7 +10,7 @@ const FilterContainer = styled.div`
   background-color: #FFFEFE;
   display: flex;
   color: black;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   position: sticky;
   top: 5rem;
@@ -28,6 +28,28 @@ const FilterCheckbox = styled.input`
   margin-right: 8px;
   color: black;
 `;
+
+
+
+
+const FilterButton = styled.button`
+  
+  padding: 12px;
+  background-color: #A56B91;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+
+
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 
 const JobFilter = ({ onFilter }) => {
   const [filters, setFilters] = useState({
@@ -92,7 +114,7 @@ const JobFilter = ({ onFilter }) => {
         />
         Skills
       </FilterLabel>
-      <button onClick={applyFilters}>Apply Filters</button>
+      <FilterButton onClick={applyFilters}>Apply Filters</FilterButton>
     </FilterContainer>
   );
 };

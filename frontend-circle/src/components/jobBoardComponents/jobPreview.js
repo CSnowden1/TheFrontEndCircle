@@ -45,6 +45,7 @@ const ViewJobLink = styled(Link)`
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease;
+  margin-right: .5rem;
 
 
 
@@ -52,6 +53,14 @@ const ViewJobLink = styled(Link)`
     text-decoration: underline;
   }
 `;
+
+const ActionBox = styled.div `
+display: flex;
+align-items: center;
+
+`
+
+
 
 const JobPreview = ({ job }) => {
     if (!job) {
@@ -68,15 +77,18 @@ const JobPreview = ({ job }) => {
             <h3>{job.company.charAt(0).toUpperCase() + job.company.slice(1)}</h3>
           </div>
           <div>
-            <strong>Location:</strong> {job.location}
+             {job.location}
           </div>
           <div>
-            <strong>Type:</strong> {job.type}
+             {job.type}
           </div>
           <div>
+             {job.type}
+          </div>
+          <ActionBox>
           <ViewJobLink to={`/jobs/${job._id}`}>Apply Here</ViewJobLink>
             <div>Save Job</div>
-          </div>  
+          </ActionBox>  
         </div>
         <div>
           <strong>Skills:</strong> {job.description}

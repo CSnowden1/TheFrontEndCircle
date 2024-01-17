@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 const SearchContainer = styled.div`
   max-width: 800px;
+  height: 4rem;
   margin: 20px auto;
-  padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   display: flex;
@@ -13,13 +13,15 @@ const SearchContainer = styled.div`
   background-color: #FFFEFE;
   position: sticky;
   top: 5px;
+  padding: 10px;
 `;
 
 const SearchInput = styled.input`
   flex: 1;
-  padding: 8px;
+  height: 100%;
+  padding: 10px;
   font-size: 1rem;
-  border: 1px solid #ddd;
+  border: 1px solid transparent;
   border-radius: 5px;
   color: #333;
 
@@ -34,16 +36,19 @@ const SearchInput = styled.input`
 `;
 
 const SearchButton = styled.button`
-  background-color: #0366d6;
+  padding: 12px;
+  background-color: #A56B91;
   color: #fff;
-  padding: 8px 15px;
-  font-size: 1rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+
+
 
   &:hover {
-    background-color: #05509b;
+    text-decoration: underline;
   }
 `;
 
