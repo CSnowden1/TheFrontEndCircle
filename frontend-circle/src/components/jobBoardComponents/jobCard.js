@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import Tag from '../resuableComponents/tag'
 
 const CardContainer = styled.div`
   display: flex;
@@ -17,6 +18,10 @@ const CardContainer = styled.div`
   &:hover {
     cursor: pointer;
   }
+
+  @media screen and (max-width: 1000px) {
+    height: 20rem;
+}
 
 `;
 
@@ -38,22 +43,37 @@ const ViewJobLink = styled(Link)`
   font-weight: bold;
 `;
 
-const JobCard = ({ job, onClick }) => {
+
+
+
+const JobCard = ({ job, isSelected, onClick }) => {
   return (
-    <CardContainer to={`/job-board/jobs/${job._id}`}>
+    <CardContainer 
+      to={`/job-board/jobs/${job._id}`}
+      style={{ border: isSelected ? '2px solid #A56B91' : 'none' }}
+      onClick={onClick}
+    >
       <JobDetails>
-      <JobTitle>{job.title}</JobTitle>
+        <JobTitle>{job.title}</JobTitle>
         <div>
-          <strong>Company:</strong> {job.company}
+          {job.company}
         </div>
         <div>
-          <strong>Location:</strong> {job.location}
+          {job.location}
         </div>
         <div>
-          <strong>Type:</strong> {job.type}
+        {job.type}
         </div>
+        <div>
+        <Tag />
+        <div>
+          Havoc Thoughts
+        </div>
+          <strong>Posted:</strong> 3 days ago   
+        </div>
+         
       </JobDetails>
-    </CardContainer >
+    </CardContainer>
   );
 };
 

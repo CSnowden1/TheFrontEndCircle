@@ -10,6 +10,11 @@ const JobInfo = styled.div`
   padding: 20px;
 `;
 
+const UserInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+`;
 
 const Container = styled.div`
   display: flex;
@@ -50,12 +55,48 @@ const JobPage = () => {
     <Container>
       <JobInfo>
         <JobDetails>
-          <Title>Job Post Details for Job ID: {jobId}</Title>
-          <Description>Title: {jobData.title}</Description>
-          <Description>Description: {jobData.description}</Description>
+          <div>
+            <div>
+              <h3>{jobData.company.charAt(0).toUpperCase() + jobData.company.slice(1)}</h3>
+            </div>
+            <div>
+              <strong>Location:</strong> {jobData.location}
+            </div>
+            <div>
+              <strong>Type:</strong> {jobData.type}
+            </div>
+            <div>
+              <div>Save Job</div>
+            </div>  
+          </div>
+        <div>
+          <div>
+          <strong>Skills:</strong> {jobData.description}
+          </div>
+          <div>
+            <strong>Description:</strong> {jobData.description}
+          </div>  
+        </div>
+        <div>
+          <div>
+            <strong>Company's LinkedIn:</strong> {jobData.description}
+          </div>
+          <div>
+            <strong>Company's Glassdoor Review:</strong> {jobData.description}
+          </div>
+          <div>
+            <strong>Keywords:</strong> {jobData.description}
+          </div>
+          <div>
+            <strong>Cover Letter Snippets:</strong> {jobData.description}
+          </div>  
+        </div>
         </JobDetails>
         <UserInfo user={jobData} />
       </JobInfo>
+      <UserInfo>
+
+      </UserInfo>
       {jobData.status === 'approved' ? (
         null
       ) : (

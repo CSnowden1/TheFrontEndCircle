@@ -106,7 +106,7 @@ function AdminLoginForm() {
         {adminState && (
           <div>
             <h3>Welcome, {adminState.username}!</h3>
-            <PendingJobs jobData={pendingJobData} />
+            <PendingJobs jobData={ pendingJobs } />
           </div>
         )}
       </FormContainer>

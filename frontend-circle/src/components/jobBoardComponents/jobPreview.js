@@ -62,16 +62,22 @@ const JobPreview = ({ job }) => {
       <JobTitle>{job.title}</JobTitle>
       <JobDetails>
         <div>
-          <h3>{job.company.charAt(0).toUpperCase() + job.company.slice(1)}</h3>
+          <div>
+            <h3>{job.company.charAt(0).toUpperCase() + job.company.slice(1)}</h3>
+          </div>
+          <div>
+            <strong>Location:</strong> {job.location}
+          </div>
+          <div>
+            <strong>Type:</strong> {job.type}
+          </div>
+          <div>
+            <ViewJobLink to={`/job-board/jobs/${job._id}`}>Apply Here</ViewJobLink>
+            <div>Save Job</div>
+          </div>  
         </div>
         <div>
-          <ViewJobLink to={`/job-board/jobs/${job._id}`}>Apply Here</ViewJobLink>
-        </div>
-        <div>
-          <strong>Location:</strong> {job.location}
-        </div>
-        <div>
-          <strong>Type:</strong> {job.type}
+          <strong>Skills:</strong> {job.description}
         </div>
         <div>
           <strong>Description:</strong> {job.description}

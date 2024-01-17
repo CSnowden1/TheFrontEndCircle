@@ -9,6 +9,12 @@ import JobPreview from '../components/jobBoardComponents/jobPreview'
 const JobBoardContainer = styled.div`
   width: 100%;
   padding: 5rem 18rem;
+
+
+  @media screen and (max-width: 1000px) {
+    padding: 2rem;
+}
+
 `;
 
 const JobBox = styled.div`
@@ -61,31 +67,33 @@ const JobBoardPage = () => {
   }, []);
 
   const handleJobClick = (job) => {
-    // Set the selected job when a job card is clicked
+    
     setSelectedJob(job);
   };
 
-  return (
-    <JobBoardContainer>
-      <Heading>Job Board</Heading>
-      <JobSearch />
-      <JobFilters />
-      {error && <ErrorMessage>{error}</ErrorMessage>}
-      <JobBox>
-        <JobList>
-          {jobs &&
-            jobs.map((job) => (
-              <JobCard
-                key={job._id}
-                job={job}
-                onClick={() => handleJobClick(job)}
-              />
-            ))}
-        </JobList>
-        <JobPreview job={selectedJob} />
-      </JobBox>
-    </JobBoardContainer>
-  );
-};
+ // JobBoardPage component
 
+return (
+  <JobBoardContainer>
+    <JobSearch />
+    <JobFilters />
+    {error && <ErrorMessage>{error}</ErrorMessage>}
+    <JobBox>
+      <JobList>
+        {jobs &&
+          jobs.map((job) => (
+            <JobCard
+              key={job._id}
+              job={job}
+              isSelected={selectedJob && job._id === selectedJob._id}
+              onClick={() => handleJobClick(job)}
+            />
+          ))}
+      </JobList>
+      <JobPreview job={selectedJob} />
+    </JobBox>
+  </JobBoardContainer>
+);
+          }
+          
 export default JobBoardPage;

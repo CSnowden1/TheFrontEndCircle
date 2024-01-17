@@ -34,7 +34,6 @@ const JobFeedback = () => {
       }
 
       console.log('Job updated successfully');
-      navigate('/dashboard');
     } catch (error) {
       console.error('Error updating job:', error);
       setError('Failed to update job. Please try again.');
