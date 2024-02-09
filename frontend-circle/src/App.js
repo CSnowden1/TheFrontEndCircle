@@ -15,6 +15,24 @@ import { useNormalUser } from './context/userContext';
 import AdminLogin from './components/adminComponents/adminLogin'
 import OwnerLogin from './components/ownerComponents/ownerLogin'
 import JobPage from './components/jobBoardComponents/jobPage'
+import styled from 'styled-components';
+
+
+
+
+
+const Layout = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+`;
+
+
+const MainContent = styled.div`
+  flex: 1;
+`;
+
+
 
 function ProtectedRoute({ children }) {
   const { user } = useNormalUser();
@@ -37,8 +55,10 @@ function App() {
   return (
     <UserProvider>
       <Router>
+        <Layout>
         <Header />
         <Navigation />
+        <MainContent>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/job-board" element={<ProtectedRoute><JobBoardPage /></ProtectedRoute>} />
@@ -51,7 +71,9 @@ function App() {
           <Route path="/admin" element={<ProtectedRoute><AdminLogin /></ProtectedRoute >}/>
           <Route path="/owner" element={<ProtectedRoute><OwnerLogin /></ProtectedRoute >}/>
         </Routes>
+        </MainContent>
         <Footer />
+        </Layout>
       </Router>
     </UserProvider>
   );

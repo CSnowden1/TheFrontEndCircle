@@ -9,7 +9,6 @@ const StyledNav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: solid #A4BDC6 .25px;
   color: #545854;
 
   a {

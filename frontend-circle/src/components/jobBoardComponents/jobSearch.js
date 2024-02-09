@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+
 const SearchContainer = styled.div`
   max-width: 800px;
   height: 4rem;
