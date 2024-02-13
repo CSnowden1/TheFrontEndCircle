@@ -39,9 +39,9 @@ function Header() {
     <HeaderContainer>
       <SmallMenu>
           <MenuItem><MenuLink href="/blogs">Blogs</MenuLink></MenuItem>
-          <MenuItem><MenuLink href="#">Career Advice</MenuLink></MenuItem>
-          <MenuItem><MenuLink href="#">Career Resources</MenuLink></MenuItem>
-          <MenuItem><MenuLink href="#">About Us</MenuLink></MenuItem>
+          <MenuItem><MenuLink href="/advice">Career Advice</MenuLink></MenuItem>
+          <MenuItem><MenuLink href="/resources">Career Resources</MenuLink></MenuItem>
+          <MenuItem><MenuLink href="/about">About Us</MenuLink></MenuItem>
       </SmallMenu>
     </HeaderContainer>
   );

@@ -16,6 +16,8 @@ import AdminLogin from './components/adminComponents/adminLogin'
 import OwnerLogin from './components/ownerComponents/ownerLogin'
 import JobPage from './components/jobBoardComponents/jobPage'
 import BlogPage from './pages/blog';
+import AboutUsPage from './pages/AboutUs';
+import CareerResourcesPage from './pages/Resources';
 import styled from 'styled-components';
 
 
@@ -63,6 +65,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/blog" element={<BlogPage />} />
+          <Route path="/about" element={<AboutUsPage />} />
+          <Route path="/resources" element={<CareerResourcesPage />} />
           <Route path="/job-board" element={<ProtectedRoute><JobBoardPage /></ProtectedRoute>} />
           <Route path="/jobs/:jobId" element={<ProtectedRoute><JobPage /></ProtectedRoute>} />
           <Route path="/submit-job" element={<ProtectedRoute><JobSubmissionPage user={user} /></ProtectedRoute>} />

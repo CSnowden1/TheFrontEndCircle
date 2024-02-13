@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import Banner from './Banner';
-import MissionVision from './MissionVision';
-import WhyHavoc from './WhyHavoc';
-import OurStory from './OurStory';
-import JoinUs from './JoinUs';
+import Banner from '../components/aboutUsComponents/banner';
+import MissionVision from '../components/aboutUsComponents/mission';
+import WhyHavoc from '../components/aboutUsComponents/whyHavoc';
+import OurStory from '../components/aboutUsComponents/ourStory';
+import JoinUs from '../components/aboutUsComponents/joinUs';
 
 const AboutUsContainer = styled.div`
   // Basic container styles
