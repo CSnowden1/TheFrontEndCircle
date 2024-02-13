@@ -14,7 +14,7 @@ const CareerResourcesPage = () => {
       <h1>Career Resources Hub</h1>
       <CareerDevelopmentPlatforms />
       <SkillDevelopmentLearning />
-      <AdditionalResources />
+      <AdditionalResources /> 
     </CareerResourcesContainer>
   );
 };

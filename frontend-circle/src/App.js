@@ -18,6 +18,7 @@ import JobPage from './components/jobBoardComponents/jobPage'
 import BlogPage from './pages/blog';
 import AboutUsPage from './pages/AboutUs';
 import CareerResourcesPage from './pages/Resources';
+import CareerAdvicePage from './pages/Advice';
 import styled from 'styled-components';
 
 
@@ -66,6 +67,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/about" element={<AboutUsPage />} />
+          <Route path="/advice" element={<CareerAdvicePage />} />
           <Route path="/resources" element={<CareerResourcesPage />} />
           <Route path="/job-board" element={<ProtectedRoute><JobBoardPage /></ProtectedRoute>} />
           <Route path="/jobs/:jobId" element={<ProtectedRoute><JobPage /></ProtectedRoute>} />
