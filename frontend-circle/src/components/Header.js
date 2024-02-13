@@ -38,7 +38,7 @@ function Header() {
   return (
     <HeaderContainer>
       <SmallMenu>
-          <MenuItem><MenuLink href="#">Blogs</MenuLink></MenuItem>
+          <MenuItem><MenuLink href="/blogs">Blogs</MenuLink></MenuItem>
           <MenuItem><MenuLink href="#">Career Advice</MenuLink></MenuItem>
           <MenuItem><MenuLink href="#">Career Resources</MenuLink></MenuItem>
           <MenuItem><MenuLink href="#">About Us</MenuLink></MenuItem>

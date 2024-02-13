@@ -15,6 +15,7 @@ import { useNormalUser } from './context/userContext';
 import AdminLogin from './components/adminComponents/adminLogin'
 import OwnerLogin from './components/ownerComponents/ownerLogin'
 import JobPage from './components/jobBoardComponents/jobPage'
+import BlogPage from './pages/blog';
 import styled from 'styled-components';
 
 
@@ -61,6 +62,7 @@ function App() {
         <MainContent>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/blog" element={<BlogPage />} />
           <Route path="/job-board" element={<ProtectedRoute><JobBoardPage /></ProtectedRoute>} />
           <Route path="/jobs/:jobId" element={<ProtectedRoute><JobPage /></ProtectedRoute>} />
           <Route path="/submit-job" element={<ProtectedRoute><JobSubmissionPage user={user} /></ProtectedRoute>} />
