@@ -9,6 +9,7 @@ const ServiceContainer = styled.div`
     width: 100%;
     background-color: white;
     padding: 3rem 25rem;
+    padding-bottom: 15rem;
 `
 
 const GridContainer = styled.div`
@@ -28,17 +29,21 @@ const Card = styled.div`
   text-align: center;
   display: flex;
   background-color: ${props => props.bgColor};
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const CardImage = styled.img`
-  width: 9rem;
-  height: 5rem;
+  width: 13rem;
+  height: 7rem;
   border-radius: 5px;
   object-fit: cover;
 `;
 
 const CardTitle = styled.h3`
   margin-top: 10px;
+  font-size: 1rem;
+  text-align: left;
 `;
 
 const LinkIcon = styled.span`
@@ -54,7 +59,6 @@ const InfoFlex = styled.div`
 
 const LinkBox = styled.div`
     display: flex;
-    border: solid black;
     align-items: center;
     justify-content: center;
 `

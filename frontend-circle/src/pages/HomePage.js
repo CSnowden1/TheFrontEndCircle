@@ -20,6 +20,11 @@ const Description = styled.p`
   font-size: 16px;
   color: #666;
   line-height: 1.5;
+  background-color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  padding-top: 3rem;
+  color: black;
 `;
 
 const Section = styled.section`
@@ -27,16 +32,20 @@ width: 100%;
 `;
 
 const SectionHeading = styled.h3`
-  font-size: 22px;
+  font-size: 2.4rem;
   color: #333;
   margin-bottom: 15px;
   color: white;
+  text-align: left;
 `;
 
 const SectionDescription = styled.p`
   font-size: 16px;
   color: #666;
   line-height: 1.5;
+  display: flex;
+  align-items: center;
+  justify-content: left;
 `;
 
 
@@ -75,7 +84,9 @@ const HomePage = () => {
                   </div>
               </JobSeekerIntro>
               <SectionDescription>
-            Discover your next career move. Browse through hundreds of job listings, get insights into different companies, and apply directly.
+                <p>
+                  Discover your next career move. Browse through hundreds of job listings, get insights into different companies, and apply directly.
+                </p>
           </SectionDescription>
             </JobSeekerIntroContent>
           
