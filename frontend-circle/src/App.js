@@ -20,8 +20,13 @@ import AboutUsPage from './pages/AboutUs';
 import CareerResourcesPage from './pages/Resources';
 import CareerAdvicePage from './pages/Advice';
 import styled from 'styled-components';
-
-
+import InterviewTips from './pages/careerGird/interviewTips';
+import CodingPrep from './pages/careerGird/freelanceGuide';
+import NetworkingTips from './pages/careerGird/codingPrep';
+import FreelancingGuides from './pages/careerGird/networkingTips';
+import ResumeSamples from './pages/careerGird/resumeSamples';
+import PortfolioGuide from './pages/careerGird/portfolioGuide';
+import LearnMorePage from './pages/LearnMore';
 
 
 
@@ -78,6 +83,14 @@ function App() {
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/admin" element={<ProtectedRoute><AdminLogin /></ProtectedRoute >}/>
           <Route path="/owner" element={<ProtectedRoute><OwnerLogin /></ProtectedRoute >}/>
+          <Route path="/interview-tips" element={<InterviewTips/>} />
+          <Route path="/coding-prep" element={<CodingPrep />} />
+          <Route path="/networking-tips" element={ <NetworkingTips/>} />
+          <Route path="/freelancing-guides" element={<FreelancingGuides />} />
+          <Route path="/resume-samples" element={<ResumeSamples />} />
+          <Route path="/portfolio-guide" element={ < PortfolioGuide /> } />
+          <Route path="/learn-more" element={< LearnMorePage />} />
+
         </Routes>
         </MainContent>
         <Footer />

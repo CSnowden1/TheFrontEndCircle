@@ -78,7 +78,8 @@ const services = [
         <ServiceContainer>
             <GridContainer>
         {services.map((service, index) => (
-          <Card key={index} bgColor={service.backgroundColor}>
+          <Link key={index} to={service.link}>
+          <Card bgColor={service.backgroundColor}>
             <InfoFlex>
                 <CardTitle>{service.title}</CardTitle>
                 <CardImage src={service.imageUrl} alt={service.title} />
@@ -94,6 +95,7 @@ const services = [
                 </Link>
             </LinkBox>
           </Card>
+          </Link>
         ))}
       </GridContainer>
         </ServiceContainer>
